@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Felix Idowu - Featured Projects showcasing data analysis, visualization, and development expertise.">
+  <meta name="keywords" content="data analysis, data visualization, projects, Felix Idowu, portfolio">
+  <meta name="author" content="Felix Idowu">
+  <meta property="og:title" content="Felix Idowu | Featured Projects">
+  <meta property="og:description" content="Explore Felix Idowu's portfolio of data-driven projects in analytics, visualization, and machine learning.">
+  <meta property="og:image" content="/1746441132098.jpg">
+  <meta property="og:url" content="https://your-portfolio.netlify.app/projects.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Felix Idowu | Featured Projects</title>
+  <link rel="icon" href="https://felido01.github.io/favicon/favicon.svg" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --primary-indigo: #4f46e5;
+      --primary-purple: #7c3aed;
+      --primary-pink: #ec4899;
+      --bg-dark: #0f172a;
+      --bg-card: #1f2937;
+      --border-dark: #374151;
+      --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --text-gray: #d1d5db;
+      --text-light: #f8fafc;
+      --font-base: 16px;
+      --font-sm: 14px;
+      --font-lg: 18px;
+      --font-xl: 24px;
+      --font-2xl: 32px;
+      --font-3xl: 40px;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-size: var(--font-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 500;
+    }
+
+    h1 { font-size: var(--font-3xl); }
+    h2 { font-size: var(--font-2xl); }
+    h3 { font-size: var(--font-xl); }
+    h4 { font-size: var(--font-lg); }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--primary-indigo);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 8px;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: var(--primary-indigo);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary-indigo);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      padding: 12px 24px;
+    }
+    .btn-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-shine:hover::before {
+      left: 100%;
+    }
+
+    /* Preloader Styling */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .loader-text {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeInOut 2s infinite;
+    }
+
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--text-gray);
+      border-top: 4px solid var(--primary-indigo);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Project Card Styling */
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .project-card .h-48 {
+      flex-shrink: 0;
+    }
+
+    .project-card .p-6 {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Animation Keyframes */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes scaleFade {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+    .animate-scale-fade { animation: scaleFade 0.8s ease forwards; }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.9); }
+      h2 { font-size: calc(var(--font-xl) * 0.9); }
+      h3 { font-size: calc(var(--font-lg) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.95); }
+      #projects .grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.8); }
+      h2 { font-size: calc(var(--font-xl) * 0.8); }
+      h3 { font-size: calc(var(--font-lg) * 0.8); }
+      body { font-size: calc(var(--font-sm) * 0.9); }
+      #projects .grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.25rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: calc(var(--font-xl) * 0.9); }
+      h2 { font-size: calc(var(--font-lg) * 0.9); }
+      h3 { font-size: calc(var(--font-base) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.85); }
+      #projects .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      .loader-text {
+        font-size: 1.25rem;
+      }
+      .loader-spinner {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-in-up, .animate-scale-fade, .loader-text, .loader-spinner {
+        animation: none;
+        transform: none;
+        opacity: 1;
+      }
+      .card-hover:hover {
+        transform: none;
+        box-shadow: none;
+      }
+      .btn-shine::before {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-gray-950 text-gray-100">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-text">Projects</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-2 sm:p-4">
+      <div class="flex items-center gap-2">
+        <a href="intro.html" class="text-xl sm:text-2xl font-bold tracking-tight">
+          <span class="gradient-text">FELIX IDOWU</span>
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-4" aria-label="Main navigation">
+        <a href="index.html#projects" class="nav-link text-gray-300 hover:text-white active">Projects</a>
+      </nav>
+      <button id="hamburger" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none" aria-label="Toggle mobile menu">
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line1"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300" id="line2"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line3"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800">
+      <div class="flex flex-col py-4 px-6 space-y-3" aria-label="Mobile navigation">
+        <a href="index.html#projects" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Projects</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text animate-fade-in-up">All Projects</h2>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
+        A collection of my work in data analysis, visualization, and machine learning.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="projectGrid">
+      <!-- Project 1: Sales Dashboard -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-100 project-card" data-project="sales-dashboard">
+        <div class="h-48 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
+          <i class="fas fa-chart-pie text-6xl text-indigo-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Sales Dashboard</h3>
+            <span class="text-xs px-2 py-1 bg-indigo-900/50 text-indigo-300 rounded-full">Tableau</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            Interactive dashboard analyzing sales performance across regions and product categories.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Sales Dashboard">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 2: Customer Segmentation -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-200 project-card" data-project="customer-segmentation">
+        <div class="h-48 bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+          <i class="fas fa-robot text-6xl text-purple-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Customer Segmentation</h3>
+            <span class="text-xs px-2 py-1 bg-purple-900/50 text-purple-300 rounded-full">Python</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            K-means clustering model to segment customers based on purchasing behavior.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Customer Segmentation">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 3: Sentiment Analysis -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-300 project-card" data-project="sentiment-analysis">
+        <div class="h-48 bg-gradient-to-r from-pink-500/20 to-red-500/20 flex items-center justify-center">
+          <i class="fas fa-comments text-6xl text-pink-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Sentiment Analysis</h3>
+            <span class="text-xs px-2 py-1 bg-pink-900/50 text-pink-300 rounded-full">NLP</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            NLP model to analyze customer reviews and classify sentiment for product improvement.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Sentiment Analysis">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 4: Predictive Maintenance -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-400 project-card" data-project="predictive-maintenance">
+        <div class="h-48 bg-gradient-to-r from-blue-500/20 to-green-500/20 flex items-center justify-center">
+          <i class="fas fa-tools text-6xl text-blue-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Predictive Maintenance</h3>
+            <span class="text-xs px-2 py-1 bg-blue-900/50 text-blue-300 rounded-full">Machine Learning</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            ML model to predict equipment failures, reducing downtime by 20% using Streamlit.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Predictive Maintenance">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 5: Web Scraping Pipeline -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-500 project-card" data-project="web-scraping-pipeline">
+        <div class="h-48 bg-gradient-to-r from-red-500/20 to-orange-500/20 flex items-center justify-center">
+          <i class="fas fa-spider text-6xl text-red-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Web Scraping Pipeline</h3>
+            <span class="text-xs px-2 py-1 bg-red-900/50 text-red-300 rounded-full">Web Scraping</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            Automated pipeline to extract and analyze data from e-commerce websites using Scrapy.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-red-400 hover:text-red-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Web Scraping Pipeline">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 6: Fraud Detection -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-600 project-card" data-project="fraud-detection">
+        <div class="h-48 bg-gradient-to-r from-teal-500/20 to-cyan-500/20 flex items-center justify-center">
+          <i class="fas fa-shield-alt text-6xl text-teal-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Fraud Detection</h3>
+            <span class="text-xs px-2 py-1 bg-teal-900/50 text-teal-300 rounded-full">Machine Learning</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            ML model to detect fraudulent transactions with 95% accuracy using XGBoost.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-teal-400 hover:text-teal-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Fraud Detection">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- Project 7: Stock Price Prediction -->
+      <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-scale-fade animation-delay-700 project-card" data-project="stock-price-prediction">
+        <div class="h-48 bg-gradient-to-r from-green-500/20 to-yellow-500/20 flex items-center justify-center">
+          <i class="fas fa-chart-line text-6xl text-green-400"></i>
+        </div>
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-xl">Stock Price Prediction</h3>
+            <span class="text-xs px-2 py-1 bg-green-900/50 text-green-300 rounded-full">Time Series</span>
+          </div>
+          <p class="text-gray-400 mb-4">
+            LSTM model to predict stock prices with historical data, visualized with Plotly.
+          </p>
+          <div class="flex justify-between items-center">
+            <a href="#" target="_blank" class="text-green-400 hover:text-green-300 text-sm font-medium flex items-center gap-1">
+              Live Demo <i class="fas fa-external-link-alt text-xs"></i>
+            </a>
+            <a href="#" target="_blank" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Stock Price Prediction">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-12 animate-fade-in-up animation-delay-800">
+      <a href="/intro.html" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+        Back to Portfolio
+        <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 bg-gray-900 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div class="space-y-4">
+          <a href="index.html" class="inline-block text-2xl font-bold tracking-tight">
+            <span class="gradient-text">FELIX IDOWU</span>
+          </a>
+          <p class="text-gray-400 text-sm">Data Analyst & Developer</p>
+          <p class="text-gray-500 text-sm">Transforming data into actionable insights.</p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Quick Links</h4>
+          <div class="flex flex-col space-y-2">
+            <a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a>
+            <a href="index.html#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+            <a href="index.html#projects" class="text-gray-400 hover:text-white transition">Projects</a>
+            <a href="index.html#experience" class="text-gray-400 hover:text-white transition">Experience</a>
+            <a href="index.html#certifications" class="text-gray-400 hover:text-white transition">Certifications</a>
+            <a href="index.html#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Stay Connected</h4>
+          <div class="flex justify-center md:justify-start gap-4 mt-4">
+            <a href="http://www.linkedin.com/in/felix-idowu-4347a4268" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-indigo-600 rounded-full transition" aria-label="LinkedIn profile">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/felido01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-gray-700 rounded-full transition" aria-label="GitHub profile">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/01_felixidowu" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-blue-500 rounded-full transition" aria-label="Twitter profile">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://medium.com/@felixidowu.01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-pink-600 rounded-full transition" aria-label="Medium profile">
+              <i class="fab fa-medium"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+        <p>© <span id="year"></span> Felix Idowu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="toTop" class="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 hover:bg-indigo-700 rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 hidden" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Utility Functions
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+    // Preloader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        $('#preloader').classList.add('hidden');
+      }, 500);
+    });
+
+    // Mobile Menu
+    const toggleMenu = () => {
+      $('#mobileMenu').classList.toggle('hidden');
+      $('#line1').classList.toggle('rotate-45');
+      $('#line1').classList.toggle('translate-y-2');
+      $('#line2').classList.toggle('opacity-0');
+      $('#line3').classList.toggle('-rotate-45');
+      $('#line3').classList.toggle('-translate-y-2');
+    };
+
+    $('#hamburger').addEventListener('click', toggleMenu);
+    $$('#mobileMenu a').forEach(link => link.addEventListener('click', toggleMenu));
+
+    // Back to Top
+    const toggleToTop = () => {
+      $('#toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+    };
+
+    window.addEventListener('scroll', toggleToTop);
+    $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('.card-hover').forEach(card => {
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 20,
+        scale: 0.95,
+        duration: 0.6,
+        ease: 'power2.out'
+      });
+    });
+
+    // Highlight Project from Query Parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const projectId = urlParams.get('project');
+    if (projectId) {
+      const projectCard = $(`[data-project="${projectId}"]`);
+      if (projectCard) {
+        projectCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        gsap.to(projectCard, {
+          borderColor: 'var(--primary-indigo)',
+          boxShadow: '0 0 15px rgba(79, 70, 229, 0.5)',
+          duration: 0.5,
+          repeat: 3,
+          yoyo: true,
+          ease: 'power2.inOut'
+        });
+      }
+    }
+
+    // Smooth Scrolling
+    $$('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = anchor.getAttribute('href');
+        const target = $(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Set Year
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

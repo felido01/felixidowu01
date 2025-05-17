@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Hospital Patient Analytics Project by Felix Idowu - Analyzing patient data to optimize hospital resources using SQL and Power BI.">
+  <meta name="keywords" content="hospital patient analytics, health care analytics, data analysis, SQL, Power BI, Felix Idowu, portfolio">
+  <meta name="author" content="Felix Idowu">
+  <meta property="og:title" content="Hospital Patient Analytics Project | Felix Idowu">
+  <meta property="og:description" content="Explore Felix Idowu's Hospital Patient Analytics project, featuring SQL-driven patient data analysis and Power BI dashboards.">
+  <meta property="og:image" content="/hospital-patient-analytics-preview.jpg">
+  <meta property="og:url" content="https://your-portfolio.netlify.app/healthcare.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Hospital Patient Analytics Project | Felix Idowu</title>
+  <link rel="icon" href="https://felido01.github.io/favicon/favicon.svg" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --primary-indigo: #4f46e5;
+      --primary-purple: #7c3aed;
+      --primary-pink: #ec4899;
+      --bg-dark: #0f172a;
+      --bg-card: #1f2937;
+      --border-dark: #374151;
+      --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --text-gray: #d1d5db;
+      --text-light: #f8fafc;
+      --font-base: 16px;
+      --font-sm: 14px;
+      --font-lg: 18px;
+      --font-xl: 24px;
+      --font-2xl: 32px;
+      --font-3xl: 40px;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-size: var(--font-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+      font-weight: 300;
+      touch-action: manipulation;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 500;
+    }
+
+    h1 { font-size: var(--font-3xl); }
+    h2 { font-size: var(--font-2xl); }
+    h3 { font-size: var(--font-xl); }
+    h4 { font-size: var(--font-lg); }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+      font-weight: 700;
+    }
+
+    .gradient-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--bg-dark);
+      z-index: 1;
+      animation: drawGradient 2s ease forwards;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--primary-indigo);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 8px;
+      touch-action: manipulation;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: var(--primary-indigo);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary-indigo);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    }
+
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      padding: 12px 24px;
+      touch-action: manipulation;
+    }
+    .btn-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-shine:hover::before {
+      left: 100%;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      color: var(--text-gray);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .form-group input:focus + label,
+    .form-group textarea:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+      top: -0.5rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--primary-indigo);
+      background: var(--bg-dark);
+      padding: 0 0.25rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-indigo);
+      box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Preloader Styling */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .loader-text {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeInOut 2s infinite;
+    }
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--text-gray);
+      border-top: 4px solid var(--primary-indigo);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Animation Keyframes */
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes fadeInOut { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    @keyframes drawGradient { 0% { width: 100%; } 100% { width: 0; } }
+    @keyframes fadeSlideIn { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeSlideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes revealFromBottom { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeInLeft { 0% { transform: translateX(-20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeInRight { 0% { transform: translateX(20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeInUp { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+    /* Animation Classes */
+    .animate-fade-slide-in { animation: fadeSlideIn 0.8s ease forwards; }
+    .animate-fade-slide-up { animation: fadeSlideUp 0.8s ease forwards; }
+    .animate-reveal-from-bottom { animation: revealFromBottom 0.8s ease forwards; }
+    .animate-fade-in-left { animation: fadeInLeft 0.8s ease forwards; }
+    .animate-fade-in-right { animation: fadeInRight 0.8s ease forwards; }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+
+    /* Delay Classes */
+    .animation-delay-100 { animation-delay: 100ms; }
+    .animation-delay-200 { animation-delay: 200ms; }
+    .animation-delay-300 { animation-delay: 300ms; }
+    .animation-delay-400 { animation-delay: 400ms; }
+    .animation-delay-500 { animation-delay: 500ms; }
+    .animation-delay-600 { animation-delay: 600ms; }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.9); }
+      h2 { font-size: calc(var(--font-xl) * 0.9); }
+      h3 { font-size: calc(var(--font-lg) * 0.9); }
+      h4 { font-size: calc(var(--font-base) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.95); }
+      header .max-w-7xl { padding: 0.75rem 1.5rem; }
+      .nav-link { font-size: calc(var(--font-sm) * 0.95); padding: 10px; }
+      .min-h-screen { padding-top: 5rem; padding-bottom: 4rem; }
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.8); }
+      h2 { font-size: calc(var(--font-xl) * 0.8); }
+      h3 { font-size: calc(var(--font-lg) * 0.8); }
+      h4 { font-size: calc(var(--font-base) * 0.8); }
+      body { font-size: calc(var(--font-sm) * 0.9); }
+      header .max-w-7xl { padding: 0.5rem 1rem; }
+      .nav-link { font-size: calc(var(--font-sm) * 0.9); padding: 8px; }
+      .min-h-screen { padding-top: 4rem; padding-bottom: 3rem; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: calc(var(--font-xl) * 0.9); }
+      h2 { font-size: calc(var(--font-lg) * 0.9); }
+      h3 { font-size: calc(var(--font-base) * 0.9); }
+      h4 { font-size: calc(var(--font-sm) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.85); }
+      header .max-w-7xl { padding: 0.5rem 0.75rem; }
+      .min-h-screen { padding-top: 1rem; padding-bottom: 2.5rem; }
+      .btn-shine { padding: 8px 16px; font-size: 0.875rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-reveal-from-bottom,
+      .animate-fade-in-left, .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        transition: none;
+      }
+      .card-hover:hover { transform: none; box-shadow: none; }
+      .btn-shine::before { display: none; }
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-gray-950 text-gray-100">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-text">Health Care Analytics</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div id="progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 z-50 transition-all"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-2 sm:p-4">
+      <div class="flex items-center gap-2">
+        <a href="index.html" class="text-xl sm:text-2xl font-bold tracking-tight">
+          <span class="gradient-text">FELIX IDOWU</span>
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-4" aria-label="Main navigation">
+        <a href="index.html#about" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-100">About</a>
+        <a href="index.html#skills" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-200">Skills</a>
+        <a href="index.html#projects" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-300">Projects</a>
+        <a href="index.html#experience" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-400">Experience</a>
+        <a href="index.html#certifications" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-500">Certifications</a>
+        <a href="index.html#contact" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-600">Contact</a>
+      </nav>
+      <button id="hamburger" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none" aria-label="Toggle mobile menu">
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line1"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300" id="line2"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line3"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800">
+      <div class="flex flex-col py-4 px-6 space-y-3" aria-label="Mobile navigation">
+        <a href="index.html#about" class="nav-link text-gray-300 hover:text-white py-2 text-lg">About</a>
+        <a href="index.html#skills" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Skills</a>
+        <a href="index.html#projects" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Projects</a>
+        <a href="index.html#experience" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Experience</a>
+        <a href="index.html#certifications" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Certifications</a>
+        <a href="index.html#contact" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20 pb-16 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl sm:text-6xl font-bold mb-6 gradient-text animate-fade-slide-up">Hospital Patient Analytics</h1>
+      <p class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-slide-up animation-delay-200">
+        Analyzing patient data to optimize hospital resource allocation and reduce costs using SQL and Power BI.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 hero-buttons">
+        <a href="#resources" class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-indigo-500/20 btn-shine animate-fade-slide-up animation-delay-400">
+          View Resources
+        </a>
+        <a href="index.html#contact" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-full font-medium border border-gray-700 transition-all duration-300 transform hover:scale-105 btn-shine animate-fade-slide-up animation-delay-600">
+          Contact Me
+        </a>
+      </div>
+    </div>
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl top-1/4 left-1/4 animate-parallax"></div>
+      <div class="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl bottom-1/4 right-1/4 animate-parallax animation-delay-2000"></div>
+      <div class="absolute w-96 h-96 bg-pink-600/10 rounded-full blur-3xl top-1/3 right-1/3 animate-parallax animation-delay-4000"></div>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section id="introduction" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Introduction</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      Hospitals today face numerous challenges, including rising healthcare costs, resource constraints, and the growing complexity of patient care. These issues can lead to inefficiencies and a reduction in the quality of care. In this analysis, my goal was to provide valuable insights into how hospitals can better manage their resources and optimize their costs. By analyzing available data, I identified areas where cost-saving measures could be implemented without compromising patient care, helping hospital administrators make more informed decisions.
+    </p>
+  </section>
+
+  <!-- Project Overview Section -->
+  <section id="overview" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Project Overview</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        In this project, I analyzed hospital patient data to uncover patterns in medical conditions, treatment costs, and patient demographics. I provided actionable insights that can help hospitals optimize patient care, reduce costs, and improve resource allocation.
+      </p>
+      <h3 class="text-xl font-bold text-indigo-400 mb-4 animate-fade-slide-up animation-delay-300">Key Objectives</h3>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        <li>Identify trends in patient age, gender, and medical conditions.</li>
+        <li>Determine the most common medical conditions by age group.</li>
+        <li>Provide the list and count of hospitals with more than one patient.</li>
+        <li>Analyze average billing amounts by medical condition and insurance provider.</li>
+        <li>Evaluate average length of stay based on medical condition and admission type.</li>
+        <li>Compare test results with discharge dates to analyze recovery times.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Dataset Description Section -->
+  <section id="dataset" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Dataset Description</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      The dataset used in this project contains healthcare-related data including patient demographics, medical conditions, and treatment information. It provides key insights into patient admissions, medical costs, and hospital resource utilization. The dataset includes the following attributes:
+    </p>
+    <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Name:</strong> The full name of the patient.</li>
+      <li><strong>Age:</strong> The patient's age at the time of admission.</li>
+      <li><strong>Gender:</strong> The gender of the patient.</li>
+      <li><strong>Blood Type:</strong> The patient's blood type (e.g., A+, O-, etc.).</li>
+      <li><strong>Medical Condition:</strong> The primary medical condition diagnosed for the patient.</li>
+      <li><strong>Date of Admission:</strong> The date the patient was admitted to the hospital.</li>
+      <li><strong>Doctor:</strong> The name or ID of the doctor assigned to the patient.</li>
+      <li><strong>Hospital:</strong> The name of the hospital where the treatment was provided.</li>
+      <li><strong>Insurance Provider:</strong> The name of the insurance provider covering the patient's medical expenses.</li>
+      <li><strong>Billing Amount:</strong> The total amount billed for the patient's treatment and services during their hospital stay.</li>
+      <li><strong>Room Number:</strong> The room number assigned to the patient during their hospitalization.</li>
+      <li><strong>Admission Type:</strong> The type of admission (e.g., emergency, planned, urgent).</li>
+      <li><strong>Discharge Date:</strong> The date the patient was discharged from the hospital.</li>
+      <li><strong>Medication:</strong> A list of medications prescribed to the patient during their stay.</li>
+      <li><strong>Test Results:</strong> Results from any diagnostic tests performed on the patient.</li>
+    </ul>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+      For more details, you can access the dataset on <a href="https://www.kaggle.com/datasets/prasad22/healthcare-dataset" target="_blank" class="text-indigo-400 hover:text-indigo-300">Kaggle</a>.
+    </p>
+  </section>
+
+  <!-- Data Cleaning Process Section -->
+  <section id="cleaning" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Data Cleaning Process</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        To ensure the dataset was accurate, consistent, and free from duplicates, I followed a series of steps in the data cleaning process:
+      </p>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        <li><strong>Removing Duplicates:</strong> Created a new table with distinct records to eliminate duplicate entries.</li>
+        <li><strong>Dropping Original Table:</strong> Removed the original table to avoid redundancy.</li>
+        <li><strong>Renaming Cleaned Table:</strong> Renamed the cleaned table to the original table name.</li>
+        <li><strong>Verifying Data:</strong> Retrieved the cleaned data to confirm accuracy.</li>
+        <li><strong>Formatting Names:</strong> Standardized patient names to title case for consistency.</li>
+      </ul>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        These steps ensured the data was clean and ready for analysis, improving the reliability of the insights generated.
+      </p>
+    </div>
+  </section>
+
+  <!-- Data Analysis Section -->
+  <section id="analysis" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Data Analysis</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      The analysis focused on uncovering key patterns in patient data through SQL queries and visualizations. Below are the key findings:
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-slide-up animation-delay-300">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-indigo-400 mb-2">Age Group Distribution</h3>
+        <p class="text-gray-400 text-sm">
+          Patients were grouped into four age categories: Old (60-89 years), Mid-Aged Adults (36-59 years), Young Adults (19-35 years), and Teens (13-18 years). The majority were in the "Old" category, followed by "Mid-Aged Adults," indicating higher healthcare needs among older populations.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-purple-400 mb-2">Gender Trends</h3>
+        <p class="text-gray-400 text-sm">
+          The gender distribution showed a near-equal ratio of male to female patients (27,496 vs. 27,470), suggesting balanced representation in the dataset.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-pink-400 mb-2">Medical Condition Trends</h3>
+        <p class="text-gray-400 text-sm">
+          The dataset included six medical conditions: Obesity, Hypertension, Diabetes, Cancer, Asthma, and Arthritis, with Arthritis being the most prevalent.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-blue-400 mb-2">Conditions by Age Group</h3>
+        <p class="text-gray-400 text-sm">
+          Diabetes was the most common condition among Old (3,528 patients) and Mid-Aged Adults (3,329 patients). Cancer was prevalent among Young Adults (2,271 patients), and Obesity was the top condition for Teens (158 patients).
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-green-400 mb-2">Hospital Distribution</h3>
+        <p class="text-gray-400 text-sm">
+          Identified hospitals with more than one patient, providing insights into patient concentration across facilities.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-yellow-400 mb-2">Billing Amounts</h3>
+        <p class="text-gray-400 text-sm">
+          Obesity had the highest average billing amounts, particularly with Cigna and Blue Cross, followed by Hypertension, Asthma, and Diabetes.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-orange-400 mb-2">Length of Stay</h3>
+        <p class="text-gray-400 text-sm">
+          Analyzed average length of stay by medical condition and admission type, revealing variations in care duration. Certain conditions required longer stays, influenced by admission type.
+        </p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-teal-400 mb-2">Recovery Times</h3>
+        <p class="text-gray-400 text-sm">
+          Compared test results (Normal, Abnormal, Inconclusive) with discharge dates, showing how recovery times varied based on test outcomes.
+        </p>
+      </div>
+    </div>
+    <p class="text-lg text-gray-300 mt-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+      For detailed SQL queries, view the <a href="https://github.com/felido01/health-care-analytics/blob/main/queries.sql" target="_blank" class="text-indigo-400 hover:text-indigo-300">SQL file</a> in the project repository.
+    </p>
+  </section>
+
+  <!-- Tools & Technologies Section -->
+  <section id="tools" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Tools & Technologies</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-slide-up animation-delay-200">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <i class="fas fa-database text-4xl text-indigo-400 mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">SQL</h3>
+        <p class="text-gray-400 text-sm">Queried hospital databases for patient data extraction and analysis.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <i class="fas fa-laptop-code text-4xl text-purple-400 mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Python</h3>
+        <p class="text-gray-400 text-sm">Used Pandas and NumPy for data cleaning and preprocessing.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <i class="fas fa-chart-line text-4xl text-pink-400 mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Power BI</h3>
+        <p class="text-gray-400 text-sm">Created interactive dashboards for visualizing hospital KPIs.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <i class="fas fa-table text-4xl text-blue-400 mb-4"></i>
+        <h3 class="font-bold text-lg mb-2">Excel</h3>
+        <p class="text-gray-400 text-sm">Performed initial data exploration and validation.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results & Impact Section -->
+  <section id="results" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Results & Impact</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-slide-up animation-delay-200">
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-2xl font-bold text-indigo-400">Cost Optimization</h3>
+          <p class="text-gray-400 text-sm">Identified areas for cost-saving measures without compromising patient care.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-2xl font-bold text-purple-400">Resource Allocation</h3>
+          <p class="text-gray-400 text-sm">Improved hospital efficiency through better resource management insights.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-2xl font-bold text-pink-400">Informed Decisions</h3>
+          <p class="text-gray-400 text-sm">Enabled data-driven decision-making for hospital administrators.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visualizations Section -->
+  <section id="visualizations" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Visualizations</h2>
+    <p class="text-lg text-gray-300 mb-8 animate-fade-slide-up animation-delay-200">
+      Preview of the Power BI dashboard showcasing key insights. Access the live version for full interactivity.
+    </p>
+    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover animate-fade-slide-up animation-delay-300">
+      <img src="/hospital-patient-analytics-preview.jpg" alt="Power BI Dashboard Preview" class="w-full h-auto rounded-lg" loading="lazy">
+      <p class="text-gray-400 text-sm mt-4">
+        Dashboard displaying patient demographics, medical conditions, billing amounts, and length of stay metrics.
+      </p>
+      <a href="https://app.powerbi.com/view?r=YOUR_POWER_BI_LINK" target="_blank" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+        View Live Dashboard <i class="fas fa-external-link-alt"></i>
+      </a>
+    </div>
+  </section>
+
+  <!-- Conclusion Section -->
+  <section id="conclusion" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Overall Conclusion</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        The analysis explored key patterns in patient data, focusing on medical conditions, billing amounts, hospital distribution, and recovery times. Key findings include:
+      </p>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        <li><strong>Medical Conditions by Age Group:</strong> Diabetes and Hypertension were prevalent in older adults, while Obesity and Asthma were common in younger patients.</li>
+        <li><strong>Hospital Distribution:</strong> Identified hospitals with multiple patients, highlighting patient concentration across facilities.</li>
+        <li><strong>Billing Amounts:</strong> Obesity and Diabetes incurred higher costs, with variations across insurance providers.</li>
+        <li><strong>Length of Stay:</strong> Certain conditions led to longer hospital stays, influenced by admission type.</li>
+        <li><strong>Recovery Times:</strong> Test results (Normal, Abnormal, Inconclusive) impacted recovery times, providing insights into patient care duration.</li>
+      </ul>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        This analysis provided a comprehensive view of patient trends, billing patterns, and recovery times, offering valuable insights for healthcare providers to optimize resource allocation, cost management, and patient care strategies.
+      </p>
+    </div>
+  </section>
+
+  <!-- Data Privacy and Security Section -->
+  <section id="privacy" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Data Privacy and Security</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      In a real-world application, patient data would be handled with the utmost care to ensure privacy and security. Key measures include:
+    </p>
+    <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Anonymization:</strong> Personally identifiable information (PII) would be anonymized or pseudonymized before analysis.</li>
+      <li><strong>Encryption:</strong> Data would be encrypted both at rest and in transit to protect it from unauthorized access.</li>
+      <li><strong>Access Controls:</strong> Role-based access would be enforced, with audit logs to track data access.</li>
+      <li><strong>Regulatory Compliance:</strong> The project would comply with data protection regulations such as HIPAA or GDPR.</li>
+      <li><strong>Data Minimization:</strong> Only necessary data would be collected and used.</li>
+      <li><strong>Data Deletion:</strong> Patient data would be securely deleted after analysis.</li>
+      <li><strong>Security Audits:</strong> Regular security assessments would ensure the system remains secure.</li>
+      <li><strong>User Consent:</strong> Explicit consent would be obtained from patients for their data to be used.</li>
+    </ul>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+      These measures help protect patient confidentiality and ensure compliance with privacy laws.
+    </p>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Resources</h2>
+    <p class="text-lg text-gray-300 mb-8 animate-fade-slide-up animation-delay-200">
+      Access the dataset, project files, code, and additional resources below.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fade-slide-up animation-delay-300">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Dataset</h3>
+        <p class="text-gray-400 text-sm mb-4">Healthcare dataset used for analysis.</p>
+        <a href="/healthcare_dataset.csv" download class="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-1">
+          Download Dataset <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Jupyter Notebook</h3>
+        <p class="text-gray-400 text-sm mb-4">Python code for data cleaning and analysis.</p>
+        <a href="https://github.com/felido01/health-care-analytics/blob/main/health_care_analytics.ipynb" target="_blank" class="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1">
+          View Notebook <i class="fas fa-code"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">SQL Queries</h3>
+        <p class="text-gray-400 text-sm mb-4">Scripts for data extraction and analysis.</p>
+        <a href="https://github.com/felido01/health-care-analytics/blob/main/queries.sql" target="_blank" class="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1">
+          View Queries <i class="fas fa-code"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Power BI File</h3>
+        <p class="text-gray-400 text-sm mb-4">Power BI project file for the dashboard.</p>
+        <a href="/hospital_patient_analytics.pbix" download class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
+          Download PBIX <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">GitHub Repository</h3>
+        <p class="text-gray-400 text-sm mb-4">Full project code and documentation.</p>
+        <a href="https://github.com/felido01/health-care-analytics" target="_blank" class="text-green-400 hover:text-green-300 text-sm font-medium flex items-center gap-1">
+          Visit Repository <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text animate-fade-slide-up">Get In Touch</h2>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-slide-up animation-delay-200">
+        Interested in this project or have questions? Let's connect!
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="animate-fade-slide-up animation-delay-100">
+        <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-indigo-400"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h4 class="font-medium">Email</h4>
+              <a href="mailto:felixidowu48@gmail.com" class="text-gray-400 hover:text-indigo-400 transition">felixidowu48@gmail.com</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-purple-400"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Phone</h4>
+              <a href="tel:+1234567890" class="text-gray-400 hover:text-purple-400 transition">+1 (234) 567-890</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-pink-400"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Location</h4>
+              <p class="text-gray-400">Lagos, Nigeria</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <a href="/resume.pdf" download class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+            Download Resume <i class="fas fa-download"></i>
+          </a>
+        </div>
+      </div>
+      <div class="animate-fade-slide-up animation-delay-200">
+        <form id="contactForm" class="space-y-4" novalidate>
+          <div id="formMessage" class="hidden p-4 rounded-lg text-sm"></div>
+          <div class="form-group">
+            <input type="text" id="name" name="name" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="name-error">
+            <label for="name">Name</label>
+            <p id="name-error" class="text-red-400 text-sm mt-1 hidden">Please enter your name.</p>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="email-error">
+            <label for="email">Email</label>
+            <p id="email-error" class="text-red-400 text-sm mt-1 hidden">Please enter a valid email address.</p>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" rows="4" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="message-error"></textarea>
+            <label for="message">Message</label>
+            <p id="message-error" class="text-red-400 text-sm mt-1 hidden">Please enter a message.</p>
+          </div>
+          <button type="submit" id="submitButton" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center btn-shine">
+            <span id="buttonText">Send Message</span>
+            <svg id="loadingSpinner" class="hidden animate-spin h-5 w-5 ml-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 bg-gray-900 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div class="space-y-4">
+          <a href="index.html" class="inline-block text-2xl font-bold tracking-tight">
+            <span class="gradient-text">FELIX IDOWU</span>
+          </a>
+          <p class="text-gray-400 text-sm">Data Analyst & Developer</p>
+          <p class="text-gray-500 text-sm">Transforming data into actionable insights.</p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Quick Links</h4>
+          <div class="flex flex-col space-y-2">
+            <a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a>
+            <a href="index.html#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+            <a href="index.html#projects" class="text-gray-400 hover:text-white transition">Projects</a>
+            <a href="index.html#experience" class="text-gray-400 hover:text-white transition">Experience</a>
+            <a href="index.html#certifications" class="text-gray-400 hover:text-white transition">Certifications</a>
+            <a href="index.html#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+          </div>
+收购
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Stay Connected</h4>
+          <div class="flex justify-center md:justify-start gap-4 mt-4">
+            <a href="http://www.linkedin.com/in/felix-idowu-4347a4268" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-indigo-600 rounded-full transition" aria-label="LinkedIn profile">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/felido01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-gray-700 rounded-full transition" aria-label="GitHub profile">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/01_felixidowu" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-blue-500 rounded-full transition" aria-label="Twitter profile">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://medium.com/@felixidowu.01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-pink-600 rounded-full transition" aria-label="Medium profile">
+              <i class="fab fa-medium"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+        <p>© <span id="year"></span> Felix Idowu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="toTop" class="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 hover:bg-indigo-700 rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 hidden" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Noscript Fallback -->
+  <noscript>
+    <style>
+      #preloader { display: none; }
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-reveal-from-bottom,
+      .animate-fade-in-left, .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      #contactForm button svg { display: none; }
+      #progress, #toTop { display: none; }
+    </style>
+    <div class="bg-yellow-900 text-yellow-100 p-4 text-center">
+      <p>JavaScript is disabled. Some features, like the contact form, may not work. Please enable JavaScript or contact me at <a href="mailto:felixidowu48@gmail.com" class="underline">felixidowu48@gmail.com</a>.</p>
+    </div>
+  </noscript>
+
+  <script>
+   // Define DOM selectors globally
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
+
+// Preloader
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    $('#preloader').classList.add('hidden');
+  }, 1500);
+});
+
+// Mobile Menu
+const toggleMenu = () => {
+  $('#mobileMenu').classList.toggle('hidden');
+  $('#line1').classList.toggle('rotate-45');
+  $('#line1').classList.toggle('translate-y-2');
+  $('#line2').classList.toggle('opacity-0');
+  $('#line3').classList.toggle('-rotate-45');
+  $('#line3').classList.toggle('-translate-y-2');
+};
+
+$('#hamburger').addEventListener('click', toggleMenu);
+$$('#mobileMenu a').forEach(link => link.addEventListener('click', toggleMenu));
+
+// Scroll Progress
+let ticking = false;
+const updateProgress = () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      const scrollHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPosition = window.scrollY;
+      $('#progress').style.width = (scrollPosition / scrollHeight) * 100 + '%';
+      ticking = false;
+    });
+    ticking = true;
+  }
+};
+
+window.addEventListener('scroll', updateProgress);
+
+// Back to Top
+const toggleToTop = () => {
+  $('#toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+};
+
+window.addEventListener('scroll', toggleToTop);
+$('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// Form Submission
+const validateForm = async (e) => {
+  e.preventDefault();
+  const form = $('#contactForm');
+  const submitButton = $('#submitButton');
+  const buttonText = $('#buttonText');
+  const loadingSpinner = $('#loadingSpinner');
+  const formMessage = $('#formMessage');
+  let isValid = true;
+
+  // Reset form message
+  formMessage.classList.add('hidden');
+  formMessage.className = 'hidden p-4 rounded-lg text-sm';
+
+  // Validate form fields
+  const fields = [
+    { id: 'name', error: 'Please enter your name.' },
+    { id: 'email', error: 'Please enter a valid email address.', validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) },
+    { id: 'message', error: 'Please enter a message.' }
+  ];
+
+  fields.forEach(field => {
+    const input = $(`#${field.id}`);
+    const error = $(`#${field.id}-error`);
+    const value = input.value.trim();
+
+    if (!value || (field.validate && !field.validate(value))) {
+      error.classList.remove('hidden');
+      input.classList.add('border-red-500');
+      isValid = false;
+    } else {
+      error.classList.add('hidden');
+      input.classList.remove('border-red-500');
+    }
+  });
+
+  if (!isValid) return;
+
+  // Update button state
+  submitButton.disabled = true;
+  buttonText.textContent = 'Sending...';
+  loadingSpinner.classList.remove('hidden');
+
+  try {
+    const response = await fetch('https://backend-m0xb.onrender.com/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: $('#name').value.trim(),
+        email: $('#email').value.trim(),
+        message: $('#message').value.trim()
+      })
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      formMessage.textContent = 'Message sent successfully!';
+      formMessage.classList.add('bg-green-900', 'text-green-300');
+      form.reset();
+    } else {
+      throw new Error(result.message || 'Failed to send message.');
+    }
+  } catch (error) {
+    console.error('Form submission error:', error);
+    formMessage.textContent = 'Failed to send message. Please try again or contact me directly at felixidowu48@gmail.com.';
+    formMessage.classList.add('bg-red-900', 'text-red-300');
+  } finally {
+    formMessage.classList.remove('hidden');
+    submitButton.disabled = false;
+    buttonText.textContent = 'Send Message';
+    loadingSpinner.classList.add('hidden');
+  }
+};
+
+$('#contactForm').addEventListener('submit', validateForm);
+
+// GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.utils.toArray('section').forEach(section => {
+  gsap.from(section, {
+    scrollTrigger: {
+      trigger: section,
+      start: 'top 80%',
+      toggleActions: 'play none none none'
+    },
+    opacity: 0,
+    y: 30,
+    duration: 1,
+    ease: 'power2.out'
+  });
+});
+
+// Smooth Scrolling
+$$('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', (e) => {
+    e.preventDefault();
+    const targetId = anchor.getAttribute('href');
+    const target = $(targetId);
+    if (target) {
+      window.scrollTo({
+        top: target.offsetTop - 60,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// Set Year
+$('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

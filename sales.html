@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Sales Performance Analysis Project by Felix Idowu - Analyzing sales trends and profitability using Python and Power BI.">
+  <meta name="keywords" content="sales analysis, data analysis, Python, Power BI, Felix Idowu, portfolio, sales performance">
+  <meta name="author" content="Felix Idowu">
+  <meta property="og:title" content="Sales Performance Analysis Project | Felix Idowu">
+  <meta property="og:description" content="Explore Felix Idowu's Sales Performance Analysis project, featuring Python-driven data analysis and Power BI dashboards.">
+  <meta property="og:image" content="/assets/images/sales-analysis-preview.jpg">
+  <meta property="og:url" content="https://your-portfolio.netlify.app/sales-analysis.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Sales Performance Analysis Project | Felix Idowu</title>
+  <link rel="icon" href="https://felido01.github.io/favicon/favicon.svg" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" media="print" onload="this.media='all'" defer>
+  <style>
+    :root {
+      --primary-indigo: #4f46e5;
+      --primary-purple: #7c3aed;
+      --primary-pink: #ec4899;
+      --bg-dark: #0f172a;
+      --bg-card: #1f2937;
+      --border-dark: #374151;
+      --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --text-gray: #d1d5db;
+      --text-light: #f8fafc;
+      --font-base: 16px;
+      --font-sm: 14px;
+      --font-lg: 18px;
+      --font-xl: 24px;
+      --font-2xl: 32px;
+      --font-3xl: 40px;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-size: var(--font-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+      font-weight: 300;
+      touch-action: manipulation;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 500;
+    }
+
+    h1 { font-size: var(--font-3xl); }
+    h2 { font-size: var(--font-2xl); }
+    h3 { font-size: var(--font-xl); }
+    h4 { font-size: var(--font-lg); }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+      font-weight: 700;
+    }
+
+    .gradient-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--bg-dark);
+      z-index: 1;
+      animation: drawGradient 2s ease forwards;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--primary-indigo);
+      background: linear-gradient(145deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 8px;
+      touch-action: manipulation;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: var(--primary-indigo);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary-indigo);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    }
+
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      padding: 12px 24px;
+      touch-action: manipulation;
+    }
+    .btn-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-shine:hover::before {
+      left: 100%;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      color: var(--text-gray);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .form-group input:focus + label,
+    .form-group textarea:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+      top: -0.5rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--primary-indigo);
+      background: var(--bg-dark);
+      padding: 0 0.25rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-indigo);
+      box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+    }
+
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .loader-text {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeInOut 2s infinite;
+    }
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--text-gray);
+      border-top: 4px solid var(--primary-indigo);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Modal Styles */
+    #imageModal {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #imageModal.show {
+      opacity: 1;
+    }
+
+    #modalImage {
+      max-height: 80vh;
+      object-fit: contain;
+    }
+
+    @media (max-width: 640px) {
+      #imageModal .max-w-4xl {
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+    }
+
+    #closeModal:hover,
+    #closeModal:focus {
+      transform: scale(1.1);
+    }
+
+    /* Custom class for enlarged Power BI dashboard image */
+    .enlarged-dashboard-img {
+      width: 100%;
+      max-width: 1200px;
+      height: 600px;
+      object-fit: contain;
+    }
+
+    @media (max-width: 1024px) {
+      .enlarged-dashboard-img {
+        max-width: 900px;
+        height: 450px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .enlarged-dashboard-img {
+        max-width: 600px;
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .enlarged-dashboard-img {
+        max-width: 100%;
+        height: 200px;
+      }
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes fadeInOut { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    @keyframes drawGradient { 0% { width: 100%; } 100% { width: 0; } }
+    @keyframes fadeSlideIn { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeSlideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeInLeft { 0% { transform: translateX(-20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeInRight { 0% { transform: translateX(20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeInUp { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+    .animate-fade-slide-in { animation: fadeSlideIn 0.8s ease forwards; }
+    .animate-fade-slide-up { animation: fadeSlideUp 0.8s ease forwards; }
+    .animate-fade-in-left { animation: fadeInLeft 0.8s ease forwards; }
+    .animate-fade-in-right { animation: fadeInRight 0.8s ease forwards; }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+
+    .animation-delay-100 { animation-delay: 100ms; }
+    .animation-delay-200 { animation-delay: 200ms; }
+    .animation-delay-300 { animation-delay: 300ms; }
+    .animation-delay-400 { animation-delay: 400ms; }
+    .animation-delay-500 { animation-delay: 500ms; }
+    .animation-delay-600 { animation-delay: 600ms; }
+
+    @media (max-width: 1024px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.9); }
+      h2 { font-size: calc(var(--font-xl) * 0.9); }
+      h3 { font-size: calc(var(--font-lg) * 0.9); }
+      h4 { font-size: calc(var(--font-base) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.95); }
+      header .max-w-7xl { padding: 0.75rem 1.5rem; }
+      .nav-link { font-size: calc(var(--font-sm) * 0.95); padding: 10px; }
+      .min-h-screen { padding-top: 5rem; padding-bottom: 4rem; }
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.8); }
+      h2 { font-size: calc(var(--font-xl) * 0.8); }
+      h3 { font-size: calc(var(--font-lg) * 0.8); }
+      h4 { font-size: calc(var(--font-base) * 0.8); }
+      body { font-size: calc(var(--font-sm) * 0.9); }
+      header .max-w-7xl { padding: 0.5rem 1rem; }
+      .nav-link { font-size: calc(var(--font-sm) * 0.9); padding: 8px; }
+      .min-h-screen { padding-top: 4rem; padding-bottom: 3rem; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: calc(var(--font-xl) * 0.9); }
+      h2 { font-size: calc(var(--font-lg) * 0.9); }
+      h3 { font-size: calc(var(--font-base) * 0.9); }
+      h4 { font-size: calc(var(--font-sm) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.85); }
+      header .max-w-7xl { padding: 0.5rem 0.75rem; }
+      .min-h-screen { padding-top: 1rem; padding-bottom: 2.5rem; }
+      .btn-shine { padding: 8px 16px; font-size: 0.875rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-fade-in-left,
+      .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        transition: none;
+      }
+      .card-hover:hover { transform: none; box-shadow: none; }
+      .btn-shine::before { display: none; }
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-gray-950 text-gray-100">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-text">Sales Performance Analysis</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div id="progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 z-50 transition-all"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-2 sm:p-4">
+      <div class="flex items-center gap-2">
+        <a href="intro.html" class="text-xl sm:text-2xl font-bold tracking-tight">
+          <span class="gradient-text">FELIX IDOWU</span>
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-4" aria-label="Main navigation">
+        <a href="intro.html#about" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-100">About</a>
+        <a href="intro.html#skills" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-200">Skills</a>
+        <a href="intro.html#projects" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-300 active">Projects</a>
+        <a href="intro.html#experience" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-400">Experience</a>
+        <a href="intro.html#certifications" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-500">Certifications</a>
+        <a href="intro.html#contact" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-600">Contact</a>
+      </nav>
+      <button id="hamburger" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none" aria-label="Toggle mobile menu">
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line1"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300" id="line2"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line3"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800">
+      <div class="flex flex-col py-4 px-6 space-y-3" aria-label="Mobile navigation">
+        <a href="intro.html#about" class="nav-link text-gray-300 hover:text-white py-2 text-lg">About</a>
+        <a href="intro.html#skills" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Skills</a>
+        <a href="intro.html#projects" class="nav-link text-gray-300 hover:text-white py-2 text-lg active">Projects</a>
+        <a href="intro.html#experience" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Experience</a>
+        <a href="intro.html#certifications" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Certifications</a>
+        <a href="intro.html#contact" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20 pb-16 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl sm:text-6xl font-bold mb-6 gradient-text animate-fade-slide-up">Sales Performance Analysis</h1>
+      <p class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-slide-up animation-delay-200">
+        Analyzing sales trends, profitability, and shipping efficiency across product categories using Python and Power BI.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 hero-buttons">
+        <a href="#resources" class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-indigo-500/20 btn-shine animate-fade-slide-up animation-delay-400">
+          View Resources
+        </a>
+        <a href="intro.html#contact" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-full font-medium border border-gray-700 transition-all duration-300 transform hover:scale-105 btn-shine animate-fade-slide-up animation-delay-600">
+          Contact Me
+        </a>
+      </div>
+    </div>
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl top-1/4 left-1/4 animate-parallax"></div>
+      <div class="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl bottom-1/4 right-1/4 animate-parallax animation-delay-2000"></div>
+      <div class="absolute w-96 h-96 bg-pink-600/10 rounded-full blur-3xl top-1/3 right-1/3 animate-parallax animation-delay-4000"></div>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section id="introduction" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Introduction</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      Businesses face challenges in optimizing sales strategies due to fluctuating market demands, regional variations, and pricing complexities. This Sales Performance Analysis project leverages Python and Power BI to uncover trends in sales, profitability, and shipping efficiency, enabling data-driven decisions to maximize revenue and streamline operations.
+    </p>
+  </section>
+
+  <!-- Project Overview Section -->
+  <section id="overview" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Project Overview</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        This project analyzes a comprehensive sales dataset to identify patterns in product performance, regional sales, and profitability. Using Python for data processing and Power BI for interactive visualizations, it demonstrates my ability to derive actionable insights for business optimization.
+      </p>
+      <h3 class="text-xl font-bold text-indigo-400 mb-4 animate-fade-slide-up animation-delay-300">Key Objectives</h3>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        <li>Analyze sales trends over time.</li>
+        <li>Identify top-performing product categories and sub-categories.</li>
+        <li>Measure profitability and the impact of discounts.</li>
+        <li>Evaluate shipping efficiency based on order priority.</li>
+        <li>Detect patterns in yearly sales and profit.</li>
+        <li>Assess customer segments and regional sales performance.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Dataset Description Section -->
+  <section id="dataset" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Dataset Description</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      The dataset contains sales metrics from a superstore, including order details, product categories, and financial performance. It provides insights into sales trends, customer behavior, and operational efficiency.
+    </p>
+    <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Order Date:</strong> Date the order was placed.</li>
+      <li><strong>Ship Date:</strong> Date the order was shipped.</li>
+      <li><strong>Category:</strong> Product category (e.g., Technology, Furniture).</li>
+      <li><strong>Sub-Category:</strong> Specific product type (e.g., Phones, Chairs).</li>
+      <li><strong>Sales:</strong> Total revenue generated from the order.</li>
+      <li><strong>Profit:</strong> Net profit or loss from the order.</li>
+      <li><strong>Order Priority:</strong> Priority level of the order (e.g., High, Medium, Low).</li>
+      <li><strong>Customer:</strong> Customer details for segment analysis.</li>
+      <li><strong>Region:</strong> Geographic region of the sale.</li>
+    </ul>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+      Access the dataset on <a href="https://www.kaggle.com/datasets/laibaanwer/superstore-sales-dataset/data" target="_blank" class="text-indigo-400 hover:text-indigo-300">Kaggle</a>.
+    </p>
+  </section>
+
+  <!-- Data Cleaning Process Section -->
+  <section id="cleaning" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Data Cleaning Process</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        The dataset was prepared and cleaned to ensure accuracy and consistency for analysis. The process involved:
+      </p>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        <li><strong>Initial Preparation:</strong> Used Google Sheets to split the profit column into profits and losses and create a shipping duration column.</li>
+        <li><strong>Data Import:</strong> Imported the dataset into a Jupyter Notebook using Pandas.</li>
+        <li><strong>Data Exploration:</strong> Checked data types, missing values, and duplicates using <code>.info()</code>, <code>.shape</code>, and <code>.describe()</code>.</li>
+        <li><strong>Data Validation:</strong> Ensured correct data types for date and sales-related columns.</li>
+        <li><strong>Transformations:</strong> Performed additional transformations during analysis based on key metrics.</li>
+      </ul>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        View the prepared dataset: <a href="https://github.com/felido01/Sales_analysis_project/blob/cb79191942c4c03528c77dbe0907be66f86b5a61/Prepared%20Data.csv" target="_blank" class="text-indigo-400 hover:text-indigo-300">Download</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Data Analysis Section -->
+  <section id="analysis" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Data Analysis</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      The analysis was conducted using Python (Pandas, Matplotlib, Seaborn) and visualized with Power BI to uncover key sales trends and insights.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-slide-up animation-delay-300">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-indigo-400 mb-2">Sales Trends</h3>
+        <p class="text-gray-400 text-sm">Sales have increased steadily over the years, with notable growth in the Central region and Consumer segment.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-purple-400 mb-2">Category Performance</h3>
+        <p class="text-gray-400 text-sm">Technology leads in sales and profit, while Furniture has high sales but significant losses.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-pink-400 mb-2">Product Insights</h3>
+        <p class="text-gray-400 text-sm">Phones are the top-selling sub-category, with Apple Smartphones leading. Disposable Bags have the lowest sales.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-blue-400 mb-2">Discount Impact</h3>
+        <p class="text-gray-400 text-sm">Discounts above 50% result in losses, with a strong correlation between high discounts and reduced profitability.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-green-400 mb-2">Shipping Efficiency</h3>
+        <p class="text-gray-400 text-sm">Order priority is well-managed, with shipping times aligning with priority levels.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="text-xl font-bold text-yellow-400 mb-2">Regional Insights</h3>
+        <p class="text-gray-400 text-sm">Central region outperforms others in sales and profit, while Canada lags behind.</p>
+      </div>
+    </div>
+    <p class="text-lg text-gray-300 mt-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+      View the full analysis: <a href="https://github.com/felido01/Sales_analysis_project/blob/3c133d5182d74d261d0724253217692f592403b9/Sales%20Analysis%20Project.ipynb" target="_blank" class="text-indigo-400 hover:text-indigo-300">Jupyter Notebook</a>.
+    </p>
+  </section>
+
+  <!-- Tools & Technologies Section -->
+  <section id="tools" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Tools & Technologies</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-slide-up animation-delay-200">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Python tool">
+        <i class="fas fa-laptop-code text-3xl text-indigo-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Python</h3>
+        <p class="text-gray-400 text-sm">Used Pandas, Matplotlib, and Seaborn for data cleaning, analysis, and visualization.</p>
+        <noscript><p class="text-gray-400 text-sm">Python Icon</p></noscript>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Jupyter Notebook tool">
+        <i class="fas fa-book text-3xl text-purple-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Jupyter Notebook</h3>
+        <p class="text-gray-400 text-sm">Environment for coding and documenting the analysis process.</p>
+        <noscript><p class="text-gray-400 text-sm">Jupyter Notebook Icon</p></noscript>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Power BI tool">
+        <i class="fas fa-chart-line text-3xl text-pink-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Power BI</h3>
+        <p class="text-gray-400 text-sm">Created interactive dashboards for visualizing sales KPIs.</p>
+        <noscript><p class="text-gray-400 text-sm">Power BI Icon</p></noscript>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Google Sheets tool">
+        <i class="fas fa-table text-3xl text-blue-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Google Sheets</h3>
+        <p class="text-gray-400 text-sm">Used for initial data preparation and column creation.</p>
+        <noscript><p class="text-gray-400 text-sm">Google Sheets Icon</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results & Impact Section -->
+  <section id="results" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Results & Impact</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-slide-up animation-delay-200">
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-2xl font-bold text-indigo-400">Profit Optimization</h3>
+          <p class="text-gray-400 text-sm">Identified high-loss products and discount strategies to improve profitability.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-2xl font-bold text-purple-400">Regional Strategies</h3>
+          <p class="text-gray-400 text-sm">Highlighted underperforming regions for targeted marketing campaigns.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-2xl font-bold text-pink-400">Operational Efficiency</h3>
+          <p class="text-gray-400 text-sm">Improved shipping processes through order priority insights.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Visualizations Section (Updated) -->
+  <section id="visualizations" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Visualizations</h2>
+    <p class="text-lg text-gray-300 mb-8 animate-fade-slide-up animation-delay-200">
+      The Power BI dashboard visualizes sales trends, category performance, and regional insights. Access the live version for interactivity (Power BI account required). Click images to enlarge.
+    </p>
+    <div class="bg-gray-800/50 p-8 rounded-xl border border-gray-700/50 card-hover animate-fade-slide-up animation-delay-300">
+      <img src="./1746147568380.png" alt="Power BI Dashboard showing sales trends and KPIs" class="enlarged-dashboard-img rounded-lg cursor-pointer mx-auto" loading="lazy">
+      <p class="text-gray-400 text-sm mt-4 text-center">
+        Dashboard displaying sales trends, category performance, regional sales, and profitability metrics.
+      </p>
+      <div class="text-center">
+        <a href="https://app.powerbi.com/links/PSaHjGBs_9?ctid=a36e1a13-c829-4154-8635-f2516711db50&pbi_source=linkShare" target="_blank" class="inline-flex items-center gap-2 mt-4 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+          View Live Dashboard <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8 animate-fade-slide-up animation-delay-400">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="./newplot (6).png" alt="Bar chart of sales trends over time" class="w-full h-auto rounded-lg cursor-pointer" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Sales have increased steadily over the years 📈.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/newplot (3).png" alt="Chart of sales distribution by region" class="w-full h-auto rounded-lg cursor-pointer" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Central region leads in sales and profit.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/newplot (5).png" alt="Chart of sales by customer segment" class="w-full h-auto rounded-lg cursor-pointer" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Consumer segment dominates sales.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/newplot (7).png" alt="Chart of sales by product category" class="w-full h-auto rounded-lg cursor-pointer" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Technology leads in sales and profit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations Section -->
+  <section id="recommendations" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Recommendations</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        Based on the analysis, the following strategies can enhance sales performance and profitability:
+      </p>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        <li><strong>Optimize Discounts:</strong> Reconsider high discounts on Phones to balance profitability and demand. Apply seasonal promotions for low-selling products like Labels.</li>
+        <li><strong>Boost Low-Demand Products:</strong> Implement targeted marketing campaigns for sub-categories with low sales.</li>
+        <li><strong>Improve Shipping:</strong> Prioritize faster processing for high-priority orders and address supply chain delays.</li>
+        <li><strong>Focus on Technology:</strong> Expand offerings in the Technology category and invest in marketing high-margin products.</li>
+        <li><strong>Regional Strategies:</strong> Launch localized campaigns in underperforming regions like Canada to boost sales.</li>
+        <li><strong>Data Collection:</strong> Implement surveys to gather customer feedback for deeper insights into satisfaction and preferences.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Challenges Section -->
+  <section id="challenges" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Challenges Encountered</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      The analysis faced several challenges that impacted the depth of insights:
+    </p>
+    <ul class="list-disc list-backdrop-blur-sm text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Incomplete Dataset:</strong> Lack of cost and cost-per-quantity data limited precise profit margin analysis.</li>
+      <li><strong>Discount Details:</strong> Absence of promotional strategy data made it difficult to assess the intent behind high discounts.</li>
+      <li><strong>Limited Customer Data:</strong> Additional demographic data would enhance analysis of purchasing behavior.</li>
+    </ul>
+  </section>
+
+  <!-- Conclusion Section -->
+  <section id="conclusion" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Conclusion</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        This Sales Performance Analysis provides actionable insights into sales trends, profitability, and operational efficiency. By optimizing discount strategies, focusing on high-profit categories, and improving regional sales, businesses can maximize revenue and streamline operations.
+      </p>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        The project showcases my proficiency in Python, data analysis, and visualization, demonstrating the ability to translate complex data into strategic recommendations for business growth.
+      </p>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Resources</h2>
+    <p class="text-lg text-gray-300 mb-8 animate-fade-slide-up animation-delay-200">
+      Access the dataset, project files, code, and additional resources below.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fade-slide-up animation-delay-300">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Dataset</h3>
+        <p class="text-gray-400 text-sm mb-4">Superstore sales dataset used for analysis.</p>
+        <a href="/assets/sales_dataset.csv" download class="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-1">
+          Download Dataset <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Prepared Dataset</h3>
+        <p class="text-gray-400 text-sm mb-4">Cleaned dataset with additional columns.</p>
+        <a href="https://github.com/felido01/Sales_analysis_project/blob/cb79191942c4c03528c77dbe0907be66f86b5a61/Prepared%20Data.csv" target="_blank" class="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1">
+          Download Prepared Data <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Jupyter Notebook</h3>
+        <p class="text-gray-400 text-sm mb-4">Python code for data cleaning and analysis.</p>
+        <a href="https://github.com/felido01/Sales_analysis_project/blob/3c133d5182d74d261d0724253217692f592403b9/Sales%20Analysis%20Project.ipynb" target="_blank" class="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1">
+          View Notebook <i class="fas fa-code"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Power BI File</h3>
+        <p class="text-gray-400 text-sm mb-4">Power BI project file for the dashboard.</p>
+        <a href="/assets/sales_performance_analysis.pbix" download class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
+          Download PBIX <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">GitHub Repository</h3>
+        <p class="text-gray-400 text-sm mb-4">Full project code and documentation.</p>
+        <a href="https://github.com/felido01/Sales_analysis_project" target="_blank" class="text-green-400 hover:text-green-300 text-sm font-medium flex items-center gap-1">
+          Visit Repository <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text animate-fade-slide-up">Get In Touch</h2>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-slide-up animation-delay-200">
+        Interested in this project or have questions? Let's connect!
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="animate-fade-slide-up animation-delay-100">
+        <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-indigo-400"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h4 class="font-medium">Email</h4>
+              <a href="mailto:felixidowu48@gmail.com" class="text-gray-400 hover:text-indigo-400 transition">felixidowu48@gmail.com</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-purple-400"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Phone</h4>
+              <a href="tel:+1234567890" class="text-gray-400 hover:text-purple-400 transition">+1 (234) 567-890</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-pink-400"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Location</h4>
+              <p class="text-gray-400">Lagos, Nigeria</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <a href="/assets/resume.pdf" download class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+            Download Resume <i class="fas fa-download"></i>
+          </a>
+        </div>
+      </div>
+      <div class="animate-fade-slide-up animation-delay-200">
+        <form id="contactForm" class="space-y-4" novalidate>
+          <div id="formMessage" class="hidden p-4 rounded-lg text-sm"></div>
+          <div class="form-group">
+            <input type="text" id="name" name="name" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="name-error">
+            <label for="name">Name</label>
+            <p id="name-error" class="text-red-400 text-sm mt-1 hidden">Please enter your name.</p>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="email-error">
+            <label for="email">Email</label>
+            <p id="email-error" class="text-red-400 text-sm mt-1 hidden">Please enter a valid email address.</p>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" rows="4" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="message-error"></textarea>
+            <label for="message">Message</label>
+            <p id="message-error" class="text-red-400 text-sm mt-1 hidden">Please enter a message.</p>
+          </div>
+          <button type="submit" id="submitButton" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center btn-shine">
+            <span id="buttonText">Send Message</span>
+            <svg id="loadingSpinner" class="hidden animate-spin h-5 w-5 ml-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 bg-gray-900 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div class="space-y-4">
+          <a href="intro.html" class="inline-block text-2xl font-bold tracking-tight">
+            <span class="gradient-text">FELIX IDOWU</span>
+          </a>
+          <p class="text-gray-400 text-sm">Data Analyst & Developer</p>
+          <p class="text-gray-500 text-sm">Transforming data into actionable insights.</p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Quick Links</h4>
+          <div class="flex flex-col space-y-2">
+            <a href="intro.html#about" class="text-gray-400 hover:text-white transition">About</a>
+            <a href="intro.html#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+            <a href="intro.html#projects" class="text-gray-400 hover:text-white transition">Projects</a>
+            <a href="intro.html#experience" class="text-gray-400 hover:text-white transition">Experience</a>
+            <a href="intro.html#certifications" class="text-gray-400 hover:text-white transition">Certifications</a>
+            <a href="intro.html#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Stay Connected</h4>
+          <div class="flex justify-center md:justify-start gap-4 mt-4">
+            <a href="http://www.linkedin.com/in/felix-idowu-4347a4268" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-indigo-600 rounded-full transition" aria-label="LinkedIn profile">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/felido01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-gray-700 rounded-full transition" aria-label="GitHub profile">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/01_felixidowu" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-blue-500 rounded-full transition" aria-label="Twitter profile">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://medium.com/@felixidowu.01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-pink-600 rounded-full transition" aria-label="Medium profile">
+              <i class="fab fa-medium"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+        <p>© <span id="year"></span> Felix Idowu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="toTop" class="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 hover:bg-indigo-700 rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 hidden" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Image Modal -->
+  <div id="imageModal" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
+    <div class="relative max-w-4xl w-full mx-4 sm:mx-6 bg-gray-900 rounded-lg p-4 sm:p-6">
+      <h2 id="modalTitle" class="sr-only">Enlarged Visualization Image</h2>
+      <button id="closeModal" class="absolute top-2 right-2 text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-full p-2" aria-label="Close modal">
+        <i class="fas fa-times text-xl"></i>
+      </button>
+      <img id="modalImage" src="" alt="Enlarged visualization" class="w-full h-auto rounded-lg" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Noscript Fallback -->
+  <noscript>
+    <style>
+      #preloader { display: none; }
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-fade-in-left,
+      .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      #contactForm button svg { display: none; }
+      #progress, #toTop, #imageModal { display: none; }
+    </style>
+    <div class="bg-yellow-900 text-yellow-100 p-4 text-center">
+      <p>JavaScript is disabled. Some features, like the contact form and image popups, may not work. Please enable JavaScript or contact me at <a href="mailto:felixidowu48@gmail.com" class="underline">felixidowu48@gmail.com</a>.</p>
+    </div>
+  </noscript>
+
+  <script>
+    // DOM selectors
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+    // Preloader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        $('#preloader').classList.add('hidden');
+      }, 1500);
+    });
+
+    // Mobile Menu
+    const toggleMenu = () => {
+      $('#mobileMenu').classList.toggle('hidden');
+      $('#line1').classList.toggle('rotate-45');
+      $('#line1').classList.toggle('translate-y-2');
+      $('#line2').classList.toggle('opacity-0');
+      $('#line3').classList.toggle('-rotate-45');
+      $('#line3').classList.toggle('-translate-y-2');
+    };
+
+    $('#hamburger').addEventListener('click', toggleMenu);
+    $$('#mobileMenu a').forEach(link => link.addEventListener('click', toggleMenu));
+
+    // Scroll Progress
+    let ticking = false;
+    const updateProgress = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollHeight = document.body.scrollHeight - window.innerHeight;
+          const scrollPosition = window.scrollY;
+          $('#progress').style.width = (scrollPosition / scrollHeight) * 100 + '%';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', updateProgress);
+
+    // Back to Top
+    const toggleToTop = () => {
+      $('#toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+    };
+
+    window.addEventListener('scroll', toggleToTop);
+    $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Image Modal Functionality
+    const imageModal = $('#imageModal');
+    const modalImage = $('#modalImage');
+    const closeModal = $('#closeModal');
+    const visualizationImages = $$('#visualizations img');
+
+    visualizationImages.forEach(img => {
+      img.classList.add('cursor-pointer');
+      img.addEventListener('click', () => {
+        modalImage.src = img.src;
+        modalImage.alt = img.alt;
+        imageModal.classList.remove('hidden');
+        imageModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    const closeModalHandler = () => {
+      imageModal.classList.remove('show');
+      setTimeout(() => {
+        imageModal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }, 300);
+    };
+
+    closeModal.addEventListener('click', closeModalHandler);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+        closeModalHandler();
+      }
+    });
+
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) {
+        closeModalHandler();
+      }
+    });
+
+    // Form Submission
+    const validateForm = async (e) => {
+      e.preventDefault();
+      const form = $('#contactForm');
+      const submitButton = $('#submitButton');
+      const buttonText = $('#buttonText');
+      const loadingSpinner = $('#loadingSpinner');
+      const formMessage = $('#formMessage');
+      let isValid = true;
+
+      formMessage.classList.add('hidden');
+      formMessage.className = 'hidden p-4 rounded-lg text-sm';
+
+      const fields = [
+        { id: 'name', error: 'Please enter your name.' },
+        { id: 'email', error: 'Please enter a valid email address.', validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) },
+        { id: 'message', error: 'Please enter a message.' }
+      ];
+
+      fields.forEach(field => {
+        const input = $(`#${field.id}`);
+        const error = $(`#${field.id}-error`);
+        const value = input.value.trim();
+
+        if (!value || (field.validate && !field.validate(value))) {
+          error.classList.remove('hidden');
+          input.classList.add('border-red-500');
+          isValid = false;
+        } else {
+          error.classList.add('hidden');
+          input.classList.remove('border-red-500');
+        }
+      });
+
+      if (!isValid) return;
+
+      submitButton.disabled = true;
+      buttonText.textContent = 'Sending...';
+      loadingSpinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch('https://backend-m0xb.onrender.com/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: $('#name').value.trim(),
+            email: $('#email').value.trim(),
+            message: $('#message').value.trim()
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          formMessage.textContent = 'Message sent successfully!';
+          formMessage.classList.add('bg-green-900', 'text-green-300');
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Failed to send message.');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        formMessage.textContent = 'Failed to send message. Please try again or contact me directly at felixidowu48@gmail.com.';
+        formMessage.classList.add('bg-red-900', 'text-red-300');
+      } finally {
+        formMessage.classList.remove('hidden');
+        submitButton.disabled = false;
+        buttonText.textContent = 'Send Message';
+        loadingSpinner.classList.add('hidden');
+      }
+    };
+
+    $('#contactForm').addEventListener('submit', validateForm);
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: 'power2.out'
+      });
+    });
+
+    // Smooth Scrolling
+    $$('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = anchor.getAttribute('href');
+        const target = $(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Set Year
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="HR Employee Attrition Analytics Project by Felix Idowu - Analyzing employee turnover using Power BI, Python, and Google Sheets.">
+  <meta name="keywords" content="employee attrition, data analysis, Power BI, Python, Felix Idowu, portfolio, HR analytics">
+  <meta name="author" content="Felix Idowu">
+  <meta property="og:title" content="HR Employee Attrition Analytics Project | Felix Idowu">
+  <meta property="og:description" content="Explore Felix Idowu's HR Employee Attrition Analytics project, featuring Power BI dashboards and Python-driven insights.">
+  <meta property="og:image" content="/assets/images/attrition-dashboard-preview.jpg">
+  <meta property="og:url" content="https://your-portfolio.netlify.app/attrition-analysis.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>HR Employee Attrition Analytics Project | Felix Idowu</title>
+  <link rel="icon" href="https://felido01.github.io/favicon/favicon.svg" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" media="print" onload="this.media='all'" defer>
+  <style>
+    :root {
+      --primary-teal: #2dd4bf;
+      --primary-purple: #7c3aed;
+      --primary-blue: #3b82f6;
+      --bg-dark: #0f172a;
+      --bg-card: #1f2937;
+      --border-dark: #374151;
+      --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --text-gray: #d1d5db;
+      --text-light: #f8fafc;
+      --font-base: 16px;
+      --font-sm: 14px;
+      --font-lg: 18px;
+      --font-xl: 24px;
+      --font-2xl: 32px;
+      --font-3xl: 40px;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-size: var(--font-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+      font-weight: 300;
+      touch-action: manipulation;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 500;
+    }
+
+    h1 { font-size: var(--font-3xl); }
+    h2 { font-size: var(--font-2xl); }
+    h3 { font-size: var(--font-xl); }
+    h4 { font-size: var(--font-lg); }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary-teal), var(--primary-purple), var(--primary-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+      font-weight: 700;
+    }
+
+    .gradient-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--bg-dark);
+      z-index: 1;
+      animation: drawGradient 2s ease forwards;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--primary-teal);
+      background: linear-gradient(145deg, rgba(45, 212, 191, 0.1), rgba(124, 58, 237, 0.1));
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 8px;
+      touch-action: manipulation;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: var(--primary-teal);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary-teal);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.3);
+    }
+
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      padding: 12px 24px;
+      touch-action: manipulation;
+    }
+    .btn-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn-shine:hover::before {
+      left: 100%;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      color: var(--text-gray);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    .form-group input:focus + label,
+    .form-group textarea:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+      top: -0.5rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--primary-teal);
+      background: var(--bg-dark);
+      padding: 0 0.25rem;
+    }
+    .form-group input,
+    .form-group textarea {
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-teal);
+      box-shadow: 0 0 10px rgba(45, 212, 191, 0.3);
+    }
+
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .loader-text {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-teal), var(--primary-purple), var(--primary-blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeInOut 2s infinite;
+    }
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--text-gray);
+      border-top: 4px solid var(--primary-teal);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes fadeInOut { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    @keyframes drawGradient { 0% { width: 100%; } 100% { width: 0; } }
+    @keyframes fadeSlideIn { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeSlideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeInLeft { 0% { transform: translateX(-20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeInRight { 0% { transform: translateX(20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+    @keyframes fadeInUp { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+    .animate-fade-slide-in { animation: fadeSlideIn 0.8s ease forwards; }
+    .animate-fade-slide-up { animation: fadeSlideUp 0.8s ease forwards; }
+    .animate-fade-in-left { animation: fadeInLeft 0.8s ease forwards; }
+    .animate-fade-in-right { animation: fadeInRight 0.8s ease forwards; }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+
+    .animation-delay-100 { animation-delay: 100ms; }
+    .animation-delay-200 { animation-delay: 200ms; }
+    .animation-delay-300 { animation-delay: 300ms; }
+    .animation-delay-400 { animation-delay: 400ms; }
+    .animation-delay-500 { animation-delay: 500ms; }
+    .animation-delay-600 { animation-delay: 600ms; }
+
+    @media (max-width: 1024px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.9); }
+      h2 { font-size: calc(var(--font-xl) * 0.9); }
+      h3 { font-size: calc(var(--font-lg) * 0.9); }
+      h4 { font-size: calc(var(--font-base) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.95); }
+      header .max-w-7xl { padding: 0.75rem 1.5rem; }
+      .nav-link { font-size: calc(var(--font-sm) * 0.95); padding: 10px; }
+      .min-h-screen { padding-top: 5rem; padding-bottom: 4rem; }
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.8); }
+      h2 { font-size: calc(var(--font-xl) * 0.8); }
+      h3 { font-size: calc(var(--font-lg) * 0.8); }
+      h4 { font-size: calc(var(--font-base) * 0.8); }
+      body { font-size: calc(var(--font-sm) * 0.9); }
+      header .max-w-7xl { padding: 0.5rem 1rem; }
+      .nav-link { font-size: calc(var(--font-sm) * 0.9); padding: 8px; }
+      .min-h-screen { padding-top: 4rem; padding-bottom: 3rem; }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: calc(var(--font-xl) * 0.9); }
+      h2 { font-size: calc(var(--font-lg) * 0.9); }
+      h3 { font-size: calc(var(--font-base) * 0.9); }
+      h4 { font-size: calc(var(--font-sm) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.85); }
+      header .max-w-7xl { padding: 0.5rem 0.75rem; }
+      .min-h-screen { padding-top: 1rem; padding-bottom: 2.5rem; }
+      .btn-shine { padding: 8px 16px; font-size: 0.875rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-fade-in-left,
+      .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        transition: none;
+      }
+      .card-hover:hover { transform: none; box-shadow: none; }
+      .btn-shine::before { display: none; }
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-gray-950 text-gray-100">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-text">HR Employee Attrition Analytics</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div id="progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-teal-400 via-purple-600 to-blue-600 z-50 transition-all"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-2 sm:p-4">
+      <div class="flex items-center gap-2">
+        <a href="intro.html" class="text-xl sm:text-2xl font-bold tracking-tight">
+          <span class="gradient-text">FELIX IDOWU</span>
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-4" aria-label="Main navigation">
+        <a href="intro.html#about" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-100">About</a>
+        <a href="intro.html#skills" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-200">Skills</a>
+        <a href="intro.html#projects" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-300 active">Projects</a>
+        <a href="intro.html#experience" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-400">Experience</a>
+        <a href="intro.html#certifications" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-500">Certifications</a>
+        <a href="intro.html#contact" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-600">Contact</a>
+      </nav>
+      <button id="hamburger" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none" aria-label="Toggle mobile menu">
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line1"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300" id="line2"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line3"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800">
+      <div class="flex flex-col py-4 px-6 space-y-3" aria-label="Mobile navigation">
+        <a href="intro.html#about" class="nav-link text-gray-300 hover:text-white py-2 text-lg">About</a>
+        <a href="intro.html#skills" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Skills</a>
+        <a href="intro.html#projects" class="nav-link text-gray-300 hover:text-white py-2 text-lg active">Projects</a>
+        <a href="intro.html#experience" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Experience</a>
+        <a href="intro.html#certifications" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Certifications</a>
+        <a href="intro.html#contact" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20 pb-16 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl sm:text-6xl font-bold mb-6 gradient-text animate-fade-slide-up">HR Employee Attrition Analytics</h1>
+      <p class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-slide-up animation-delay-200">
+        Uncovering patterns in employee turnover to improve retention using Power BI, Python, and Google Sheets.
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 hero-buttons">
+        <a href="#resources" class="px-8 py-3 bg-gradient-to-r from-teal-400 to-purple-600 rounded-full font-medium hover:from-teal-500 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-teal-500/20 btn-shine animate-fade-slide-up animation-delay-400">
+          View Resources
+        </a>
+        <a href="intro.html#contact" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-full font-medium border border-gray-700 transition-all duration-300 transform hover:scale-105 btn-shine animate-fade-slide-up animation-delay-600">
+          Contact Me
+        </a>
+      </div>
+    </div>
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute w-64 h-64 bg-teal-600/20 rounded-full blur-3xl top-1/4 left-1/4 animate-parallax"></div>
+      <div class="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl bottom-1/4 right-1/4 animate-parallax animation-delay-2000"></div>
+      <div class="absolute w-96 h-96 bg-blue-600/10 rounded-full blur-3xl top-1/3 right-1/3 animate-parallax animation-delay-4000"></div>
+    </div>
+  </section>
+
+  <!-- Introduction Section -->
+  <section id="introduction" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Introduction</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      Employee attrition reflects workplace culture, satisfaction, and organizational health. High turnover increases costs, disrupts teams, and impacts morale. This project analyzes the IBM HR Employee Attrition dataset to uncover turnover patterns, using Power BI to deliver actionable insights for better retention.
+    </p>
+  </section>
+
+  <!-- Project Overview Section -->
+  <section id="overview" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Project Overview</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        This project identifies key factors driving employee attrition, providing HR teams with insights to enhance retention. Using Power BI for visualizations and Python for analysis, it showcases my ability to transform data into strategic recommendations.
+      </p>
+      <h3 class="text-xl font-bold text-teal-400 mb-4 animate-fade-slide-up animation-delay-300">Key Objectives</h3>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        <li>Identify primary factors contributing to employee attrition.</li>
+        <li>Provide actionable insights to improve retention rates.</li>
+        <li>Analyze attrition patterns by age, department, job role, and satisfaction.</li>
+        <li>Visualize key metrics through an interactive Power BI dashboard.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Dataset Description Section -->
+  <section id="dataset" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Dataset Description</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      The IBM HR Analytics Employee Attrition dataset from Kaggle includes comprehensive employee data, such as age, department, job role, satisfaction, and attrition status, enabling detailed analysis of turnover factors.
+    </p>
+    <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Age:</strong> Employee’s age.</li>
+      <li><strong>Department:</strong> Department of employment (e.g., Research & Development).</li>
+      <li><strong>Job Role:</strong> Specific role (e.g., Laboratory Technician).</li>
+      <li><strong>Job Satisfaction:</strong> Employee satisfaction level.</li>
+      <li><strong>Monthly Income:</strong> Employee’s monthly salary.</li>
+      <li><strong>Attrition:</strong> Whether the employee left (Yes/No).</li>
+      <li><strong>Gender:</strong> Employee’s gender.</li>
+      <li><strong>Job Level:</strong> Employee’s job level within the organization.</li>
+    </ul>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+      Access the dataset on <a href="https://www.kaggle.com/datasets/pavansubhasht/ibm-hr-analytics-attrition-dataset" target="_blank" class="text-teal-400 hover:text-teal-300">Kaggle</a>.
+    </p>
+  </section>
+
+  <!-- Data Cleaning Process Section -->
+  <section id="cleaning" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Data Cleaning Process</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        The dataset was cleaned to ensure accuracy and usability for analysis, using Google Sheets and Python.
+      </p>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        <li><strong>Google Sheets:</strong> Used Find and Replace to decode values and formatted currency columns for consistency.</li>
+        <li><strong>Python:</strong> Imported data into Pandas, performed EDA with <code>.shape</code>, <code>.head()</code>, <code>.info()</code>, and <code>.describe()</code>, and checked for missing or duplicate values (none found).</li>
+        <li><strong>Visualization:</strong> Created quick plots with Matplotlib and Seaborn to assess attrition counts.</li>
+      </ul>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-400">
+        View the prepared dataset: <a href="https://github.com/felido01/Attrition_analysis_project/blob/main/Prepared_Data.csv" target="_blank" class="text-teal-400 hover:text-teal-300">Download</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Dashboard Design Process Section -->
+  <section id="dashboard" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Dashboard Design Process</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      A Power BI dashboard was created to visualize attrition factors, enhanced with a custom Figma background for aesthetic appeal. Power Query and DAX were used for data transformation and metric calculations.
+    </p>
+    <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Figma:</strong> Designed a custom dashboard background for visual consistency.</li>
+      <li><strong>Power Query:</strong> Transformed data for analysis readiness.</li>
+      <li><strong>DAX:</strong> Calculated metrics like total attrition, employee count, and gender distribution.</li>
+      <li><strong>Charts:</strong> Developed visualizations for attrition by age, department, job role, and satisfaction.</li>
+    </ul>
+  </section>
+
+  <!-- Key Insights Section -->
+  <section id="insights" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Key Insights & Observations</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        The analysis revealed a 16.12% attrition rate and key factors driving turnover.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 animate-fade-slide-up animation-delay-300">
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-xl font-bold text-teal-400 mb-2">Age & Job Level</h3>
+          <p class="text-gray-400 text-sm">Younger employees and Job Level 1 staff show higher attrition rates.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-xl font-bold text-purple-400 mb-2">Department</h3>
+          <p class="text-gray-400 text-sm">Research & Development has the highest attrition, especially among Laboratory Technicians.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-xl font-bold text-blue-400 mb-2">Job Satisfaction</h3>
+          <p class="text-gray-400 text-sm">Low satisfaction correlates with high attrition; high satisfaction also shows unexpected turnover.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-xl font-bold text-green-400 mb-2">Gender</h3>
+          <p class="text-gray-400 text-sm">Male employees exhibit higher attrition than female employees.</p>
+        </div>
+        <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+          <h3 class="text-xl font-bold text-yellow-400 mb-2">Compensation</h3>
+          <p class="text-gray-400 text-sm">Employees earning $1,000–$5,000/month have the highest attrition rates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools & Technologies Section -->
+  <section id="tools" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Tools & Technologies</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-slide-up animation-delay-200">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Power BI tool">
+        <i class="fas fa-chart-line text-3xl text-teal-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Power BI</h3>
+        <p class="text-gray-400 text-sm">Created interactive dashboards for attrition insights.</p>
+        <noscript><p class="text-gray-400 text-sm">Power BI Icon</p></noscript>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Python tool">
+        <i class="fas fa-laptop-code text-3xl text-purple-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Python</h3>
+        <p class="text-gray-400 text-sm">Used Pandas, Matplotlib, and Seaborn for data exploration.</p>
+        <noscript><p class="text-gray-400 text-sm">Python Icon</p></noscript>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Google Sheets tool">
+        <i class="fas fa-table text-3xl text-blue-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Google Sheets</h3>
+        <p class="text-gray-400 text-sm">Preprocessed data with Find and Replace and formatting.</p>
+        <noscript><p class="text-gray-400 text-sm">Google Sheets Icon</p></noscript>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover" aria-label="Figma tool">
+        <i class="fas fa-palette text-3xl text-pink-400 mb-4" role="img" aria-hidden="true"></i>
+        <h3 class="font-bold text-lg mb-2">Figma</h3>
+        <p class="text-gray-400 text-sm">Designed custom dashboard background for Power BI.</p>
+        <noscript><p class="text-gray-400 text-sm">Figma Icon</p></noscript>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recommendations Section -->
+  <section id="recommendations" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Recommendations</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        Strategic actions to reduce attrition and improve retention include:
+      </p>
+      <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        <li><strong>Young Employees & Job Level 1:</strong> Implement mentorship, training, and clear career paths.</li>
+        <li><strong>Research & Development:</strong> Conduct surveys and exit interviews to address department-specific issues.</li>
+        <li><strong>Laboratory Technicians:</strong> Offer job rotation and development opportunities.</li>
+        <li><strong>Job Satisfaction:</strong> Regularly measure satisfaction and address workload or growth concerns.</li>
+        <li><strong>Male Employees:</strong> Investigate gender-specific turnover through targeted surveys.</li>
+        <li><strong>Compensation:</strong> Review salaries for employees earning $1,000–$5,000/month and add incentives.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Challenges Section -->
+  <section id="challenges" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Challenges Encountered</h2>
+    <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+      Implementing retention strategies may face obstacles, including:
+      </p>
+    <ul class="list-disc list-inside text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+      <li><strong>Resistance to Participation:</strong> Employees or managers may resist new initiatives.</li>
+      <li><strong>Resource Constraints:</strong> Limited time and budget may hinder program development.</li>
+      <li><strong>Low Survey Participation:</strong> Inaccurate or insufficient data could skew insights.</li>
+    </ul>
+  </section>
+
+  <!-- Conclusion Section -->
+  <section id="conclusion" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Conclusion</h2>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-200">
+        This project highlights key attrition factors and offers targeted strategies to enhance retention. By addressing age, department, satisfaction, and compensation issues, organizations can build a more engaged workforce.
+      </p>
+      <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-slide-up animation-delay-300">
+        The project demonstrates my expertise in Power BI, Python, and data-driven decision-making, delivering actionable HR insights.
+      </p>
+    </div>
+  </section>
+
+  <!-- Visualizations Section -->
+  <section id="visualizations" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Visualizations</h2>
+    <p class="text-lg text-gray-300 mb-8 animate-fade-slide-up animation-delay-200">
+      The Power BI dashboard visualizes attrition trends across three interactive pages, covering metrics like age, department, job role, and income. Access the live version for interactivity (Power BI account required).
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-slide-up animation-delay-300">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/dashboard-page1.jpg" alt="Dashboard Page 1" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Page 1: Overview of attrition metrics and key trends.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/dashboard-page2.jpg" alt="Dashboard Page 2" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Page 2: Detailed analysis by department and job role.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/dashboard-page3.jpg" alt="Dashboard Page 3" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Page 3: Insights on age, income, and satisfaction patterns.</p>
+      </div>
+    </div>
+    <div class="text-center mt-8 animate-fade-slide-up animation-delay-400">
+      <a href="https://app.powerbi.com/links/attrition_dashboard" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+        View Live Dashboard <i class="fas fa-external-link-alt"></i>
+      </a>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8 animate-fade-slide-up animation-delay-400">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/attrition-by-age.png" alt="Attrition by Age" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Younger employees show higher attrition rates.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/attrition-by-department.png" alt="Attrition by Department" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Research & Development leads in attrition.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/attrition-by-role.png" alt="Attrition by Job Role" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Laboratory Technicians have the highest turnover.</p>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <img src="/assets/images/attrition-by-income.png" alt="Attrition by Income" class="w-full h-auto rounded-lg" loading="lazy">
+        <p class="text-gray-400 text-sm mt-4">Employees earning $1,000–$5,000/month are most likely to leave.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text animate-fade-slide-up">Resources</h2>
+    <p class="text-lg text-gray-300 mb-8 animate-fade-slide-up animation-delay-200">
+      Access the dataset, code, and project files below.
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 animate-fade-slide-up animation-delay-300">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Dataset</h3>
+        <p class="text-gray-400 text-sm mb-4">IBM HR Employee Attrition dataset.</p>
+        <a href="/assets/attrition_dataset.csv" download class="text-teal-400 hover:text-teal-300 text-sm font-medium flex items-center gap-1">
+          Download Dataset <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Prepared Dataset</h3>
+        <p class="text-gray-400 text-sm mb-4">Cleaned dataset with formatted columns.</p>
+        <a href="https://github.com/felido01/Attrition_analysis_project/blob/main/Prepared_Data.csv" target="_blank" class="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1">
+          Download Prepared Data <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Python Code</h3>
+        <p class="text-gray-400 text-sm mb-4">Python script for data exploration.</p>
+        <a href="https://github.com/felido01/Attrition_analysis_project/blob/main/Attrition_Analysis.ipynb" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
+          View Notebook <i class="fas fa-code"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">Power BI File</h3>
+        <p class="text-gray-400 text-sm mb-4">Power BI dashboard file.</p>
+        <a href="/assets/attrition_analysis.pbix" download class="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1">
+          Download PBIX <i class="fas fa-download"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+        <h3 class="font-bold text-lg mb-2">GitHub Repository</h3>
+        <p class="text-gray-400 text-sm mb-4">Full project code and documentation.</p>
+        <a href="https://github.com/felido01/Attrition_analysis_project" target="_blank" class="text-green-400 hover:text-green-300 text-sm font-medium flex items-center gap-1">
+          Visit Repository <i class="fab fa-github"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text animate-fade-slide-up">Get In Touch</h2>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-slide-up animation-delay-200">
+        Interested in this project or have questions? Let's connect!
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="animate-fade-slide-up animation-delay-100">
+        <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-teal-400"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h4 class="font-medium">Email</h4>
+              <a href="mailto:felixidowu48@gmail.com" class="text-gray-400 hover:text-teal-400 transition">felixidowu48@gmail.com</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-purple-400"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Phone</h4>
+              <a href="tel:+1234567890" class="text-gray-400 hover:text-purple-400 transition">+1 (234) 567-890</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-blue-400"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Location</h4>
+              <p class="text-gray-400">Lagos, Nigeria</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <a href="/assets/resume.pdf" download class="inline-flex items-center gap-2 px-6 py-3 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+            Download Resume <i class="fas fa-download"></i>
+          </a>
+        </div>
+      </div>
+      <div class="animate-fade-slide-up animation-delay-200">
+        <form id="contactForm" class="space-y-4" novalidate>
+          <div id="formMessage" class="hidden p-4 rounded-lg text-sm"></div>
+          <div class="form-group">
+            <input type="text" id="name" name="name" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition" required aria-describedby="name-error">
+            <label for="name">Name</label>
+            <p id="name-error" class="text-red-400 text-sm mt-1 hidden">Please enter your name.</p>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition" required aria-describedby="email-error">
+            <label for="email">Email</label>
+            <p id="email-error" class="text-red-400 text-sm mt-1 hidden">Please enter a valid email address.</p>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" rows="4" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition" required aria-describedby="message-error"></textarea>
+            <label for="message">Message</label>
+            <p id="message-error" class="text-red-400 text-sm mt-1 hidden">Please enter a message.</p>
+          </div>
+          <button type="submit" id="submitButton" class="w-full bg-gradient-to-r from-teal-400 to-purple-600 hover:from-teal-500 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center btn-shine">
+            <span id="buttonText">Send Message</span>
+            <svg id="loadingSpinner" class="hidden animate-spin h-5 w-5 ml-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 bg-gray-900 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div class="space-y-4">
+          <a href="intro.html" class="inline-block text-2xl font-bold tracking-tight">
+            <span class="gradient-text">FELIX IDOWU</span>
+          </a>
+          <p class="text-gray-400 text-sm">Data Analyst & Developer</p>
+          <p class="text-gray-500 text-sm">Transforming data into actionable insights.</p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Quick Links</h4>
+          <div class="flex flex-col space-y-2">
+            <a href="intro.html#about" class="text-gray-400 hover:text-white transition">About</a>
+            <a href="intro.html#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+            <a href="intro.html#projects" class="text-gray-400 hover:text-white transition">Projects</a>
+            <a href="intro.html#experience" class="text-gray-400 hover:text-white transition">Experience</a>
+            <a href="intro.html#certifications" class="text-gray-400 hover:text-white transition">Certifications</a>
+            <a href="intro.html#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Stay Connected</h4>
+          <div class="flex justify-center md:justify-start gap-4 mt-4">
+            <a href="http://www.linkedin.com/in/felix-idowu-4347a4268" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-teal-400 rounded-full transition" aria-label="LinkedIn profile">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/felido01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-gray-700 rounded-full transition" aria-label="GitHub profile">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/01_felixidowu" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-8
+            00 hover:bg-blue-500 rounded-full transition" aria-label="Twitter profile">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://medium.com/@felixidowu.01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-purple-600 rounded-full transition" aria-label="Medium profile">
+              <i class="fab fa-medium"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+        <p>© <span id="year"></span> Felix Idowu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="toTop" class="fixed bottom-8 right-8 w-12 h-12 bg-teal-400 hover:bg-teal-500 rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 hidden" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Noscript Fallback -->
+  <noscript>
+    <style>
+      #preloader { display: none; }
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-fade-in-left,
+      .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      #contactForm button svg { display: none; }
+      #progress, #toTop { display: none; }
+    </style>
+    <div class="bg-yellow-900 text-yellow-100 p-4 text-center">
+      <p>JavaScript is disabled. Some features, like the contact form, may not work. Please enable JavaScript or contact me at <a href="mailto:felixidowu48@gmail.com" class="underline">felixidowu48@gmail.com</a>.</p>
+    </div>
+  </noscript>
+
+  <script>
+    // DOM selectors
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+    // Preloader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        $('#preloader').classList.add('hidden');
+      }, 1500);
+    });
+
+    // Mobile Menu
+    const toggleMenu = () => {
+      $('#mobileMenu').classList.toggle('hidden');
+      $('#line1').classList.toggle('rotate-45');
+      $('#line1').classList.toggle('translate-y-2');
+      $('#line2').classList.toggle('opacity-0');
+      $('#line3').classList.toggle('-rotate-45');
+      $('#line3').classList.toggle('-translate-y-2');
+    };
+
+    $('#hamburger').addEventListener('click', toggleMenu);
+    $$('#mobileMenu a').forEach(link => link.addEventListener('click', toggleMenu));
+
+    // Scroll Progress
+    let ticking = false;
+    const updateProgress = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollHeight = document.body.scrollHeight - window.innerHeight;
+          const scrollPosition = window.scrollY;
+          $('#progress').style.width = (scrollPosition / scrollHeight) * 100 + '%';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', updateProgress);
+
+    // Back to Top
+    const toggleToTop = () => {
+      $('#toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+    };
+
+    window.addEventListener('scroll', toggleToTop);
+    $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Form Submission
+    const validateForm = async (e) => {
+      e.preventDefault();
+      const form = $('#contactForm');
+      const submitButton = $('#submitButton');
+      const buttonText = $('#buttonText');
+      const loadingSpinner = $('#loadingSpinner');
+      const formMessage = $('#formMessage');
+      let isValid = true;
+
+      formMessage.classList.add('hidden');
+      formMessage.className = 'hidden p-4 rounded-lg text-sm';
+
+      const fields = [
+        { id: 'name', error: 'Please enter your name.' },
+        { id: 'email', error: 'Please enter a valid email address.', validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) },
+        { id: 'message', error: 'Please enter a message.' }
+      ];
+
+      fields.forEach(field => {
+        const input = $(`#${field.id}`);
+        const error = $(`#${field.id}-error`);
+        const value = input.value.trim();
+
+        if (!value || (field.validate && !field.validate(value))) {
+          error.classList.remove('hidden');
+          input.classList.add('border-red-500');
+          isValid = false;
+        } else {
+          error.classList.add('hidden');
+          input.classList.remove('border-red-500');
+        }
+      });
+
+      if (!isValid) return;
+
+      submitButton.disabled = true;
+      buttonText.textContent = 'Sending...';
+      loadingSpinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch('https://backend-m0xb.onrender.com/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: $('#name').value.trim(),
+            email: $('#email').value.trim(),
+            message: $('#message').value.trim()
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          formMessage.textContent = 'Message sent successfully!';
+          formMessage.classList.add('bg-green-900', 'text-green-300');
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Failed to send message.');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        formMessage.textContent = 'Failed to send message. Please try again or contact me directly at felixidowu48@gmail.com.';
+        formMessage.classList.add('bg-red-900', 'text-red-300');
+      } finally {
+        formMessage.classList.remove('hidden');
+        submitButton.disabled = false;
+        buttonText.textContent = 'Send Message';
+        loadingSpinner.classList.add('hidden');
+      }
+    };
+
+    $('#contactForm').addEventListener('submit', validateForm);
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: 'power2.out'
+      });
+    });
+
+    // Smooth Scrolling
+    $$('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = anchor.getAttribute('href');
+        const target = $(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Set Year
+    $('#year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

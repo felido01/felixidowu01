@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Felix Idowu - Data Analyst & Developer with expertise in data visualization, predictive modeling, and business intelligence.">
+  <meta name="keywords" content="data analyst, data visualization, business intelligence, Felix Idowu, portfolio">
+  <meta name="author" content="Felix Idowu">
+  <meta property="og:title" content="Felix Idowu | Data Analyst & Developer">
+  <meta property="og:description" content="Explore Felix Idowu's portfolio showcasing data analysis, visualization, and development projects.">
+  <meta property="og:image" content="/1746441132098.jpg">
+  <meta property="og:url" content="https://your-portfolio.netlify.app">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Felix Idowu | Data Analyst & Developer</title>
+  <link rel="icon" href="https://felido01.github.io/favicon/favicon.svg" type="image/x-icon">
+  <script src="https://cdn.tailwindcss.com" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+  <style>
+    :root {
+      --primary-indigo: #4f46e5;
+      --primary-purple: #7c3aed;
+      --primary-pink: #ec4899;
+      --bg-dark: #0f172a;
+      --bg-card: #1f2937;
+      --border-dark: #374151;
+      --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --text-gray: #d1d5db;
+      --text-light: #f8fafc;
+      --font-base: 16px;
+      --font-sm: 14px;
+      --font-lg: 18px;
+      --font-xl: 24px;
+      --font-2xl: 32px;
+      --font-3xl: 40px;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      font-size: var(--font-base);
+      line-height: 1.6;
+      overflow-x: hidden;
+      font-weight: 300;
+      touch-action: manipulation;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 500;
+    }
+
+    h1 { font-size: var(--font-3xl); }
+    h2 { font-size: var(--font-2xl); }
+    h3 { font-size: var(--font-xl); }
+    h4 { font-size: var(--font-lg); }
+
+    .gradient-text {
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      position: relative;
+      display: inline-block;
+      font-weight: 700;
+    }
+
+    .gradient-text::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--bg-dark);
+      z-index: 1;
+      animation: drawGradient 2s ease forwards;
+    }
+
+    .card-hover {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-light);
+      border-color: var(--primary-indigo);
+    }
+
+    .skill-icon {
+      transition: transform 0.3s ease;
+    }
+    .skill-icon:hover {
+      transform: scale(1.1);
+    }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.3s ease, transform 0.3s ease;
+      padding: 8px;
+      touch-action: manipulation;
+    }
+    .nav-link:hover {
+      transform: translateY(-2px);
+      color: var(--primary-indigo);
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: var(--primary-indigo);
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, button:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Profile Image Styling */
+    .profile-img-container {
+      position: relative;
+      cursor: pointer;
+      animation: scaleFade 1s ease forwards;
+    }
+
+    .profile-img {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+      position: relative;
+    }
+
+    .profile-img::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(124, 58, 237, 0.3);
+      border-radius: 50%;
+      z-index: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .profile-img:hover::before {
+      opacity: 0.5;
+    }
+
+    .profile-img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
+      opacity: 0.7;
+    }
+
+    .profile-img-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    .profile-img-container:hover .profile-img-overlay {
+      opacity: 1;
+    }
+
+    .profile-img-overlay i {
+      color: var(--text-light);
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    .profile-img-overlay:hover i {
+      transform: scale(1.2);
+    }
+
+    /* Modal Styling */
+    #profileModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #profileModal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      background: var(--bg-card);
+      padding: 1rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      animation: zoomIn 0.5s ease;
+    }
+
+    .modal-content img {
+      max-width: 100%;
+      max-height: 70vh;
+      border-radius: 0.5rem;
+      object-fit: contain;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: -1.5rem;
+      right: -1.5rem;
+      width: 3rem;
+      height: 3rem;
+      background: var(--primary-indigo);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .modal-close:hover {
+      transform: rotate(90deg);
+      background: var(--primary-purple);
+    }
+
+    /* Preloader Styling */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    #preloader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loader {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .loader-text {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: fadeInOut 2s infinite;
+    }
+
+    .loader-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--text-gray);
+      border-top: 4px solid var(--primary-indigo);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    /* Button Shine Effect */
+    .btn-shine {
+      position: relative;
+      overflow: hidden;
+      padding: 12px 24px;
+      touch-action: manipulation;
+    }
+
+    .btn-shine::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .btn-shine:hover::before {
+      left: 100%;
+    }
+
+    /* Form Input Styling */
+    .form-group {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      color: var(--text-gray);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+
+    .form-group input:focus + label,
+    .form-group textarea:focus + label,
+    .form-group input:not(:placeholder-shown) + label,
+    .form-group textarea:not(:placeholder-shown) + label {
+      top: -0.5rem;
+      left: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--primary-indigo);
+      background: var(--bg-dark);
+      padding: 0 0.25rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-indigo);
+      box-shadow: 0 0 10px rgba(79, 70, 229, 0.3);
+    }
+
+    /* Mouse Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scroll-indicator .arrow {
+  width: 24px;
+  height: 40px;
+  fill: var(--primary-indigo);
+  transition: transform 0.3s ease, fill 0.3s ease;
+  animation: pulseArrow 2s ease-in-out infinite;
+}
+
+.scroll-indicator:hover .arrow {
+  transform: scale(1.1);
+  fill: var(--primary-purple);
+}
+
+/* Responsive Scroll Indicator */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    bottom: 4rem;
+  }
+  .scroll-indicator .arrow {
+    width: 20px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .scroll-indicator {
+    bottom: 6rem;
+  }
+  .scroll-indicator .arrow {
+    width: 16px;
+    height: 32px;
+  }
+}
+
+/* Animation Keyframes */
+@keyframes pulseArrow {
+  0% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(8px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.7; }
+}
+    /* Animation Keyframes */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes scaleFade {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes drawGradient {
+      0% { width: 100%; }
+      100% { width: 0; }
+    }
+
+    @keyframes scrollWheel {
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(0.8rem); opacity: 0.3; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeSlideIn {
+      0% { transform: translateY(10px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeSlideUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes parallax {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(20px); }
+    }
+
+    @keyframes revealFromBottom {
+      0% { transform: translateY(30px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulseMarker {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes fadeInLeft {
+      0% { transform: translateX(-20px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeInRight {
+      0% { transform: translateX(20px); opacity: 0; }
+      100% { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(10px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes scaleFadeHover {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    /* Animation Classes */
+    .animate-fade-slide-in { animation: fadeSlideIn 0.8s ease forwards; }
+    .animate-fade-slide-up { animation: fadeSlideUp 0.8s ease forwards; }
+    .animate-parallax { animation: parallax 8s ease-in-out infinite alternate; }
+    .animate-reveal-from-bottom { animation: revealFromBottom 0.8s ease forwards; }
+    .animate-pulse-marker { animation: pulseMarker 2s ease infinite; }
+    .animate-fade-in-left { animation: fadeInLeft 0.8s ease forwards; }
+    .animate-fade-in-right { animation: fadeInRight 0.8s ease forwards; }
+    .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+    .animate-scale-fade-hover { animation: scaleFadeHover 0.3s ease forwards; }
+
+    /* Delay Classes */
+    .animation-delay-100 { animation-delay: 100ms; }
+    .animation-delay-200 { animation-delay: 200ms; }
+    .animation-delay-300 { animation-delay: 300ms; }
+    .animation-delay-400 { animation-delay: 400ms; }
+    .animation-delay-500 { animation-delay: 500ms; }
+    .animation-delay-600 { animation-delay: 600ms; }
+    .animation-delay-700 { animation-delay: 700ms; }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.9); }
+      h2 { font-size: calc(var(--font-xl) * 0.9); }
+      h3 { font-size: calc(var(--font-lg) * 0.9); }
+      h4 { font-size: calc(var(--font-base) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.95); }
+
+      header .max-w-7xl {
+        padding: 0.75rem 1.5rem;
+      }
+
+      .nav-link {
+        font-size: calc(var(--font-sm) * 0.95);
+        padding: 10px;
+      }
+
+      .min-h-screen {
+        padding-top: 5rem;
+        padding-bottom: 4rem;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .hero-buttons a {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: calc(var(--font-sm) * 0.95);
+      }
+
+      #about, #projects, #experience, #certifications, #contact {
+        padding: 4rem 1.5rem;
+      }
+
+      #projects .grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.25rem;
+      }
+
+      #experience .bg-gray-900\/30 {
+        padding: 2.5rem 1.5rem;
+      }
+
+      .experience-timeline .flex {
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+
+      .experience-timeline .md\:w-1\/2 {
+        width: 100%;
+        text-align: left;
+        padding: 0;
+      }
+
+      .experience-timeline .absolute {
+        left: 1.25rem;
+      }
+
+      #certifications .grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.25rem;
+      }
+
+      #contact .grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.75rem;
+        font-size: calc(var(--font-sm) * 0.95);
+      }
+
+      .form-group label {
+        font-size: calc(var(--font-sm) * 0.95);
+      }
+
+      footer {
+        padding: 2.5rem 1.5rem;
+      }
+
+      footer .grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: calc(var(--font-2xl) * 0.8); }
+      h2 { font-size: calc(var(--font-xl) * 0.8); }
+      h3 { font-size: calc(var(--font-lg) * 0.8); }
+      h4 { font-size: calc(var(--font-base) * 0.8); }
+      body { font-size: calc(var(--font-sm) * 0.9); }
+
+      .profile-img {
+        width: 36px;
+        height: 36px;
+      }
+
+      .loader-text {
+        font-size: 1.25rem;
+      }
+
+      .loader-spinner {
+        width: 36px;
+        height: 36px;
+      }
+
+      .modal-content {
+        padding: 0.75rem;
+      }
+
+      .modal-close {
+        top: -1rem;
+        right: -1rem;
+        width: 2.25rem;
+        height: 2.25rem;
+      }
+
+      header .max-w-7xl {
+        padding: 0.5rem 1rem;
+      }
+
+      .nav-link {
+        font-size: calc(var(--font-sm) * 0.9);
+        padding: 8px;
+      }
+
+      .min-h-screen {
+        padding-top: 4rem;
+        padding-bottom: 3rem;
+      }
+
+      #projects .grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      #certifications .grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      #contact {
+        padding: 3rem 1rem;
+      }
+
+      footer {
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: calc(var(--font-xl) * 0.9); }
+      h2 { font-size: calc(var(--font-lg) * 0.9); }
+      h3 { font-size: calc(var(--font-base) * 0.9); }
+      h4 { font-size: calc(var(--font-sm) * 0.9); }
+      body { font-size: calc(var(--font-sm) * 0.85); }
+
+      .profile-img {
+        width: 32px;
+        height: 32px;
+      }
+
+      header .max-w-7xl {
+        padding: 0.5rem 0.75rem;
+      }
+
+      .min-h-screen {
+        padding-top: 1rem;
+        padding-bottom: 2.5rem;
+      }
+
+      #projects .grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      #certifications .p-6 {
+        padding: 1rem;
+      }
+
+      #certifications h3 {
+        font-size: calc(var(--font-base) * 0.9);
+      }
+
+      #certifications .text-sm {
+        font-size: calc(var(--font-sm) * 0.85);
+      }
+
+      #certifications a {
+        font-size: calc(var(--font-sm) * 0.85);
+      }
+
+      #contact {
+        padding: 2rem 0.75rem;
+      }
+
+      .form-group input,
+      .form-group textarea {
+        padding: 0.5rem;
+      }
+
+      footer {
+        padding: 1.5rem 0.75rem;
+      }
+    }
+
+    /* Additional Media Queries for Edge Cases */
+    @media (max-width: 360px) {
+      h1 { font-size: calc(var(--font-xl) * 0.7); }
+      h2 { font-size: calc(var(--font-lg) * 0.7); }
+      h3 { font-size: calc(var(--font-base) * 0.8); }
+      h4 { font-size: calc(var(--font-sm) * 0.8); }
+      body { font-size: calc(var(--font-sm) * 0.75); }
+
+      .profile-img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .hero-buttons a {
+        padding: 0.5rem;
+        font-size: calc(var(--font-sm) * 0.8);
+      }
+
+      #projects .grid {
+        gap: 0.5rem;
+      }
+
+      #contact .grid {
+        gap: 1.5rem;
+      }
+
+      .btn-shine {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+      }
+
+      .modal-content {
+        max-width: 98%;
+      }
+
+      .modal-close {
+        top: -0.75rem;
+        right: -0.75rem;
+        width: 1.75rem;
+        height: 1.75rem;
+      }
+    }
+
+    @media (orientation: landscape) and (max-height: 500px) {
+      .min-h-screen {
+        padding-top: 3rem;
+        padding-bottom: 2rem;
+      }
+
+      .scroll-indicator {
+        bottom: 1rem;
+      }
+    }
+
+    /* Skills Section Responsive Adjustments */
+    @media (max-width: 1024px) {
+      #skills .grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.5rem;
+      }
+      #skills .p-4 {
+        padding: 1rem;
+      }
+      #skills .text-3xl {
+        font-size: 2rem;
+      }
+      #skills h3 {
+        font-size: 1rem;
+      }
+      #skills p {
+        font-size: 0.875rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      #skills .grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+      #skills .p-4 {
+        padding: 0.75rem;
+      }
+      #skills .text-3xl {
+        font-size: 1.75rem;
+      }
+      #skills h3 {
+        font-size: 0.9375rem;
+      }
+      #skills p {
+        font-size: 0.8125rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #skills .grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      #skills .p-4 {
+        padding: 0.5rem;
+      }
+      #skills .text-3xl {
+        font-size: 1.5rem;
+      }
+      #skills h3 {
+        font-size: 0.875rem;
+      }
+      #skills p {
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Modal Responsiveness */
+    @media (max-width: 480px) {
+      .modal-content {
+        max-width: 95%;
+        padding: 0.5rem;
+      }
+      .modal-content img {
+        max-height: 60vh;
+      }
+      .modal-close {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* Button Scaling */
+    @media (max-width: 480px) {
+      .btn-shine {
+        padding: 8px 16px;
+        font-size: 0.875rem;
+      }
+    }
+
+    /* Disable Animations on Low-End Devices or Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .animate-fade-slide-in,
+      .animate-fade-slide-up,
+      .animate-reveal-from-bottom,
+      .animate-fade-in-left,
+      .animate-fade-in-right,
+      .animate-fade-in-up,
+      .animate-parallax,
+      .animate-pulse-marker,
+      .animate-scale-fade-hover {
+        animation: none;
+        transition: none;
+      }
+
+      .scroll-indicator .mouse,
+      .scroll-indicator .wheel {
+        animation: none;
+      }
+
+      .card-hover:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .btn-shine::before {
+        display: none;
+      }
+    }
+  /* Dashboard Gallery Styling */
+/* Dashboard Gallery Styling */
+#dashboard-gallery {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+#dashboard-gallery .dashboard-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: var(--bg-card);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+#dashboard-gallery .dashboard-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.2);
+  border-color: var(--primary-indigo);
+}
+
+#dashboard-gallery .dashboard-img-container {
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+  pointer-events: auto;
+  background-color: var(--bg-dark);
+  padding: 1rem;
+}
+
+#dashboard-gallery .dashboard-img {
+  width: 100%;
+  height: auto;
+  max-height: 32rem; /* Larger default height */
+  object-fit: contain;
+  display: block;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  border-radius: 0.5rem;
+}
+
+#dashboard-gallery .dashboard-img-container:hover .dashboard-img {
+  transform: scale(1.08);
+  opacity: 0.95;
+}
+
+#dashboard-gallery .dashboard-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  border-radius: 0.5rem;
+}
+
+#dashboard-gallery .dashboard-img-container:hover .dashboard-img-overlay {
+  opacity: 1;
+}
+
+/* Modal Image Styling for Dashboard Images */
+#profileModal .modal-content img {
+  max-width: 95vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 0.75rem;
+}
+
+/* Modal Loading State */
+.modal-content.loading img {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-content img {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* Responsive Adjustments for Dashboard Gallery */
+@media (max-width: 1024px) {
+  #dashboard-gallery .grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  #dashboard-gallery .dashboard-img {
+    max-height: 28rem;
+  }
+  #dashboard-gallery .p-8 {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #dashboard-gallery .grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  #dashboard-gallery .dashboard-img {
+    max-height: 24rem;
+  }
+  #dashboard-gallery .p-8 {
+    padding: 1.25rem;
+  }
+  #dashboard-gallery h3 {
+    font-size: 1.25rem;
+  }
+  #dashboard-gallery p {
+    font-size: 0.9375rem;
+  }
+  #dashboard-gallery a {
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #dashboard-gallery .dashboard-img {
+    max-height: 20rem;
+  }
+  #dashboard-gallery .p-8 {
+    padding: 1rem;
+  }
+  #dashboard-gallery h3 {
+    font-size: 1.125rem;
+  }
+  #dashboard-gallery p {
+    font-size: 0.875rem;
+  }
+  #dashboard-gallery a {
+    font-size: 0.875rem;
+  }
+}
+
+/* Ensure dashboard image container is clickable */
+.dashboard-img-container {
+  position: relative;
+  overflow: visible;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 10; /* Ensure it’s above other elements */
+  background-color: var(--bg-dark);
+}
+
+/* Ensure overlay doesn’t block clicks */
+.dashboard-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 5; /* Below container but above image */
+}
+
+/* Ensure image is fully visible and responsive */
+.dashboard-img {
+  width: 100%;
+  height: auto;
+  max-height: 20rem; /* Consistent with existing styling */
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1;
+}
+
+/* Hover effects */
+.dashboard-img-container:hover .dashboard-img {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+.dashboard-img-container:hover .dashboard-img-overlay {
+  opacity: 1;
+}
+
+/* Modal loading state */
+.modal-content.loading img {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.modal-content img {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  max-width: 90vw;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+}
+  </style>
+  
+</head>
+<body class="overflow-x-hidden bg-gray-950 text-gray-100">
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader">
+      <div class="loader-text">Felix Idowu</div>
+      <div class="loader-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div id="profileModal" role="dialog" aria-labelledby="profileModalTitle">
+    <div class="modal-content">
+      <span class="modal-close" role="button" aria-label="Close modal"><i class="fas fa-times"></i></span>
+      <img src="./1746441132098.jpg" alt="Felix Idowu Profile Large" loading="lazy">
+    </div>
+  </div>
+
+  <!-- Scroll Progress Bar -->
+  <div id="progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 z-50 transition-all"></div>
+
+  <!-- Header -->
+  <header class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto flex justify-between items-center p-2 sm:p-4">
+      <div class="flex items-center gap-2">
+        <div class="profile-img-container" id="profileImgContainer" role="button" aria-label="View profile image">
+          <img src="./1746441132098.jpg" alt="Felix Idowu Profile" class="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-indigo-600 shadow-md profile-img" loading="lazy">
+          <div class="profile-img-overlay">
+            <i class="fas fa-search-plus"></i>
+          </div>
+        </div>
+        <a href="#" class="text-xl sm:text-2xl font-bold tracking-tight">
+          <span class="gradient-text">FELIX IDOWU</span>
+        </a>
+      </div>
+      <nav class="hidden md:flex space-x-4" aria-label="Main navigation">
+        <a href="#about" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-100">About</a>
+        <a href="#skills" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-200">Skills</a>
+        <a href="#projects" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-300">Projects</a>
+        <!-- <a href="#dashboard-gallery" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-550">Dashboard Gallery</a> -->
+        <a href="#experience" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-400">Experience</a>
+        <a href="#certifications" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-500">Certifications</a>
+        <a href="#contact" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-600">Contact</a>
+      </nav>
+      <button id="hamburger" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none" aria-label="Toggle mobile menu">
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line1"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300" id="line2"></span>
+        <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line3"></span>
+      </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800">
+      <div class="flex flex-col py-4 px-6 space-y-3" aria-label="Mobile navigation">
+        <a href="#about" class="nav-link text-gray-300 hover:text-white py-2 text-lg">About</a>
+        <a href="#skills" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Skills</a>
+        <a href="#projects" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Projects</a>
+        <!-- <a href="#dashboard-gallery" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Dashboard Gallery</a> -->
+        <a href="#experience" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Experience</a>
+        <a href="#certifications" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Certifications</a>
+        <a href="#contact" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20 pb-16 relative overflow-hidden">
+    <div class="max-w-4xl mx-auto">
+      <div class="mb-6 animate-fade-slide-up">
+        <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-indigo-900/50 text-indigo-300 border border-indigo-800/50">
+          Data Analyst & Developer
+        </span>
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-bold mb-6 animate-fade-slide-up animation-delay-200">
+        <span class="gradient-text">Hi, I'm Felix</span>
+      </h1>
+      <p id="typed" class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-slide-up animation-delay-400"></p>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-4 hero-buttons">
+        <a href="#projects" class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-indigo-500/20 btn-shine animate-fade-slide-up animation-delay-600">
+          View My Work
+        </a>
+        <a href="#contact" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-full font-medium border border-gray-700 transition-all duration-300 transform hover:scale-105 btn-shine animate-fade-slide-up animation-delay-800">
+        Contact me
+        </a>
+      </div>
+    </div>
+
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl top-1/4 left-1/4 animate-parallax"></div>
+      <div class="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl bottom-1/4 right-1/4 animate-parallax animation-delay-2000"></div>
+      <div class="absolute w-96 h-96 bg-pink-600/10 rounded-full blur-3xl top-1/3 right-1/3 animate-parallax animation-delay-4000"></div>
+    </div>
+
+    <div class="scroll-indicator" id="scrollIndicator">
+  <svg class="arrow" viewBox="0 0 24 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 28L4 20L6.8 17.2L12 22.4L17.2 17.2L20 20L12 28ZM12 20L4 12L6.8 9.2L12 14.4L17.2 9.2L20 12L12 20Z" />
+  </svg>
+</div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="flex flex-col items-center gap-12">
+      <div class="w-full">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-6 gradient-text">About Me</h2>
+        <p class="text-lg text-gray-300 mb-6 leading-relaxed animate-fade-in-left animation-delay-200">
+          Results-driven Data Analyst with 2 years of practical experience gained through internships, real-world data projects, and academic research. Proficient in data cleaning, data wrangling, web scraping, and exploratory data analysis (EDA) using Python (Pandas, NumPy, and other libraries) and SQL. Experienced in designing interactive dashboards and data visualizations using Power BI and Matplotlib to support data-driven decision-making. Skilled in statistical analysis, data storytelling, and delivering actionable insights through clear and concise reports. Passionate about leveraging data to identify trends, optimize business processes, and drive problem-solving initiatives.
+        </p>
+        <p class="text-lg text-gray-300 mb-8 leading-relaxed animate-fade-in-left animation-delay-400">
+          When I'm not crunching numbers, I build interactive dashboards and web applications to make data accessible. My mission is to empower organizations with strategic, data-driven decisions.
+        </p>
+        <div class="flex flex-wrap gap-4 animate-fade-in-left animation-delay-600">
+          <div class="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700">
+            <div class="w-2 h-2 bg-indigo-400 rounded-full"></div>
+            <span>Available for freelance</span>
+          </div>
+          <div class="flex items-center gap-2 bg-gray-800/50 px-4 py-2 rounded-full border border-gray-700">
+            <div class="w-2 h-2 bg-green-400 rounded-full"></div>
+            <span>Open to collaborations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-16 sm:py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12 sm:mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text">My Skills</h2>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-left animation-delay-200">
+          Combining analytical expertise with technical skills to deliver impactful data solutions.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-100">
+          <div class="text-indigo-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Data Analysis</h3>
+          <p class="text-gray-400 text-sm">Python, SQL, R, Pandas, NumPy</p>
+        </div>
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-200">
+          <div class="text-purple-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Visualization</h3>
+          <p class="text-gray-400 text-sm">Tableau, Power BI, Matplotlib, Seaborn</p>
+        </div>
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-300">
+          <div class="text-pink-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Business Intelligence</h3>
+          <p class="text-gray-400 text-sm">KPIs, Dashboards, Reporting</p>
+        </div>
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-400">
+          <div class="text-blue-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-server"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Databases</h3>
+          <p class="text-gray-400 text-sm">PostgreSQL, MySQL, MongoDB</p>
+        </div>
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-500">
+          <div class="text-green-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Statistics</h3>
+          <p class="text-gray-400 text-sm">Statistical Analysis, Hypothesis Testing, Regression</p>
+        </div>
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-600">
+          <div class="text-yellow-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Soft Skills</h3>
+          <p class="text-gray-400 text-sm">Communication, Problem-Solving, Team Collaboration</p>
+        </div>
+        <div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-700">
+          <div class="text-orange-400 mb-4 text-3xl sm:text-4xl skill-icon">
+            <i class="fas fa-laptop-code"></i>
+          </div>
+          <h3 class="font-bold text-base sm:text-lg mb-2">Programming</h3>
+          <p class="text-gray-400 text-sm">Python, R, SQL</p>
+        </div>
+        <!-- Machine Learning
+<div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-800">
+  <div class="text-teal-400 mb-4 text-3xl sm:text-4xl skill-icon">
+    <i class="fas fa-brain"></i>
+  </div>
+  <h3 class="font-bold text-base sm:text-lg mb-2">Machine Learning</h3>
+  <p class="text-gray-400 text-sm">Scikit-learn, TensorFlow, Predictive Modeling</p>
+</div> -->
+
+<!-- Data Extraction (Web Scraping) -->
+<div class="bg-gray-800/50 p-4 sm:p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-900">
+  <div class="text-red-400 mb-4 text-3xl sm:text-4xl skill-icon">
+    <i class="fas fa-spider"></i>
+  </div>
+  <h3 class="font-bold text-base sm:text-lg mb-2">Data Extraction</h3>
+  <p class="text-gray-400 text-sm">Beautiful Soup, Scrapy, Selenium</p>
+</div>
+      </div>
+    </div>
+  </section>
+
+<!-- Projects Section -->
+<section id="projects" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+  <div class="text-center mb-16">
+    <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text">Featured Projects</h2>
+    <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-left animation-delay-200">
+      Recent projects showcasing my expertise in data analysis and visualization.
+    </p>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+    <!-- Sales Performance Analysis (First) -->
+    <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-100">
+      <div class="h-48 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 flex items-center justify-center">
+        <i class="fas fa-chart-pie text-6xl text-indigo-400"></i>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-3">
+          <h3 class="font-bold text-xl">Sales Performance Analysis</h3>
+          <span class="text-xs px-2 py-1 bg-indigo-900/50 text-indigo-300 rounded-full">Python</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Comprehensive analysis to improve sales performance by providing key insights into sales trends, profitability, discount strategies and so on.
+        </p>
+        <div class="flex justify-between items-center">
+          <a href="https://github.com/felido01/sales_performance/blob/46cde9ec307fac3218bb699e4b286ff9471daace/README.md" class="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-1">
+            View Project <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+          <div class="flex gap-2">
+            <a href="https://github.com/felido01/sales_performance/tree/main" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Sales Analysis">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://colab.research.google.com/drive/1lcm9vW6VO56u1bdVR_L-bHVqzrVlbTPI?usp=sharing" class="text-gray-500 hover:text-gray-300" aria-label="Live Sales Analysis project">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Employee Attrition (Second) -->
+    <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-200">
+      <div class="h-48 bg-gradient-to-r from-purple-500/20 to-pink-500/20 flex items-center justify-center">
+        <i class="fas fa-user-times text-6xl text-purple-400"></i>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-3">
+          <h3 class="font-bold text-xl">Employee Attrition Analysis</h3>
+          <span class="text-xs px-2 py-1 bg-purple-900/50 text-purple-300 rounded-full">Power BI</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Focused analysis to reduce employee attrition by exploring turnover patterns, workplace factors, engagement levels, and retention strategies.
+        </p>
+        <div class="flex justify-between items-center">
+          <a href="https://medium.com/@felixidowu.01/hr-employee-attrition-analytics-3e22db3cbb87" class="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1">
+            View Project <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+          <div class="flex gap-2">
+            <a href="https://github.com/felido01/Employee_Attrition_Analytics" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Employee Attrition">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://github.com/felido01/Employee_Attrition_Analytics/blob/cf7e44b2eec93ed9af62c65359086c9eade5cc88/README.md" class="text-gray-500 hover:text-gray-300" aria-label="Live Employee Attrition project">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Hospital Patients Analytics (Third) -->
+    <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-300">
+      <div class="h-48 bg-gradient-to-r from-pink-500/20 to-red-500/20 flex items-center justify-center">
+        <i class="fas fa-heartbeat text-6xl text-pink-400"></i>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-3">
+          <h3 class="font-bold text-xl">Hospital &nbsp; &nbsp; Patients Analytics</h3>
+          <span class="text-xs px-2 py-1 bg-pink-900/50 text-pink-300 rounded-full">SQL</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Comprehensive analysis to enhance healthcare outcomes by examining patient trends, resource usage, treatment efficiency, and service delivery gaps.
+        </p>
+        <div class="flex justify-between items-center">
+          <a href="https://github.com/felido01/Health_Patient_Analytics/blob/2f5b072378b3efb2e55b25d51c3cfbcce8d97c12/README.md" class="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1">
+            View Project <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+          <div class="flex gap-2">
+            <a href="https://github.com/felido01/Health_Patient_Analytics" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Health Care Analytics">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://github.com/felido01/Health_Patient_Analytics/blob/2f5b072378b3efb2e55b25d51c3cfbcce8d97c12/healthcare_analytics.sql" class="text-gray-500 hover:text-gray-300" aria-label="Live Health Care Analytics project">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Customer Financial Analysis (Fourth) -->
+    <div class="bg-gray-800/50 rounded-xl overflow-hidden border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-400">
+      <div class="h-48 bg-gradient-to-r from-blue-500/20 to-green-500/20 flex items-center justify-center">
+        <i class="fas fa-users text-6xl text-blue-400"></i>
+      </div>
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-3">
+          <h3 class="font-bold text-xl">Customer Financial Analysis</h3>
+          <span class="text-xs px-2 py-1 bg-blue-900/50 text-blue-300 rounded-full">Python</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Detailed analysis to assess customer financial behavior by evaluating spending patterns, credit risk, payment history, and profitability segments.
+        </p>
+        <div class="flex justify-between items-center">
+          <a href="https://github.com/felido01/Financial_Analysis/blob/main/README.md" class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
+            View Project <i class="fas fa-arrow-right text-xs"></i>
+          </a>
+          <div class="flex gap-2">
+            <a href="https://github.com/felido01/Financial_Analysis/tree/main" class="text-gray-500 hover:text-gray-300" aria-label="GitHub repository for Customer Behavior Dashboard">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://github.com/felido01/Financial_Analysis/blob/main/Financial%20Analysis.ipynb" class="text-gray-500 hover:text-gray-300" aria-label="Live Customer Behavior Dashboard project">
+              <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="text-center mt-12 animate-fade-in-left animation-delay-500">
+    <a href="projects.html" class="inline-flex items-center gap-2 px-6 py-3 border border-gray-700 rounded-full text-gray-300 hover:text-white hover:border-indigo-500 transition-all btn-shine">
+      View All Projects
+      <i class="fas fa-arrow-right"></i>
+    </a>
+  </div> -->
+</section>
+
+
+
+  <!-- Experience Section -->
+  <section id="experience" class="py-20 px-4 sm:px-6 bg-gray-900/30">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text">Work Experience</h2>
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-left animation-delay-200">My professional journey and key accomplishments.</p>
+      </div>
+      <div class="relative space-y-12 experience-timeline">
+        <div class="hidden md:block absolute left-1/2 h-full w-0.5 bg-gradient-to-b from-indigo-600/20 via-purple-600/20 to-pink-600/20 transform -translate-x-1/2"></div>
+        <div class="relative">
+          <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-indigo-600 rounded-full transform md:-translate-x-1/2 -translate-y-1/2 top-6 md:top-1/2 z-10 animate-pulse-marker" aria-label="Timeline marker for Senior Data Analyst role"></div>
+          <div class="flex flex-col md:flex-row md:justify-between gap-6 md:gap-8 pl-12 md:pl-0 animate-fade-in-right animation-delay-100">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-indigo-900/50 text-indigo-300 mb-2">Feb 2023 - July 2024</span>
+              <h3 class="text-xl font-bold">Student Data Analyst</h3>
+              <p class="text-indigo-400">University-Based Analytics Projects</p>
+            </div>
+            <div class="md:w-1/2 md:pl-8">
+              <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+                <p class="text-gray-300 mb-4">
+                <li> Conducted in-depth analysis on university datasets (course feedback, enrollment trends), identifying key insights that led to a 15% improvement in course satisfaction ratings.</li> 
+<li> Collaborated with interdisciplinary teams on data-driven projects, driving 3+ process improvements that enhanced departmental efficiency.</li>
+<li> Designed and deployed interactive dashboards using Power BI and Google Sheets, enabling decision-makers to access academic performance metrics 30% faster.</li> 
+<li>Utilized SQL and Python (Pandas, Matplotlib) to clean, transform, and analyze datasets exceeding 50,000 records, streamlining data workflows across multiple projects.</li> 
+<li>Presented findings through visual reports and presentations, influencing 2 key strategic decisions at the faculty level.</li> 
+                </p><br>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Python</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Tableau</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">SQL</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Machine Learning</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-purple-600 rounded-full transform md:-translate-x-1/2 -translate-y-1/2 top-6 md:top-1/2 z-10 animate-pulse-marker" aria-label="Timeline marker for Data Analyst role"></div>
+          <div class="flex flex-col md:flex-row md:justify-between gap-6 md:gap-8 pl-12 md:pl-0 animate-fade-in-right animation-delay-200">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-purple-900/50 text-purple-300 mb-2">Sept 2024 - Nov 2024</span>
+              <h3 class="text-xl font-bold">Data Science Intern</h3>
+              <p class="text-purple-400">CodSoft</p>
+            </div>
+            <div class="md:w-1/2 md:pl-8">
+              <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+                <p class="text-gray-300 mb-4">
+                 <li> Performed Exploratory Data Analysis (EDA) using Python and Pandas to identify trends, patterns, and outliers in large datasets.</li>
+<li>Applied data preprocessing techniques to clean, transform, and structure data, improving data quality for downstream analysis.</li>
+<li>Developed machine learning models with Scikit-learn, enhancing predictive accuracy for classification and regression tasks.</li>
+<li>Developed data visualizations with Matplotlib and Seaborn to support data-driven decision-making and communicate findings clearly.</li>
+                </p> <br>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Power BI</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">R</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Excel</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Data Mining</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative">
+          <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-pink-600 rounded-full transform md:-translate-x-1/2 -translate-y-1/2 top-6 md:top-1/2 z-10 animate-pulse-marker" aria-label="Timeline marker for Junior Data Analyst role"></div>
+          <div class="flex flex-col md:flex-row md:justify-between gap-6 md:gap-8 pl-12 md:pl-0 animate-fade-in-right animation-delay-300">
+            <div class="md:w-1/2 md:text-right md:pr-8">
+              <span class="inline-block px-3 py-1 text-sm font-medium rounded-full bg-pink-900/50 text-pink-300 mb-2">April 2025 - May 2025</span>
+              <h3 class="text-xl font-bold">Data Analyst</h3>
+              <p class="text-pink-400">Codveda</p>
+            </div>
+            <div class="md:w-1/2 md:pl-8">
+              <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover">
+                <p class="text-gray-300 mb-4">
+                 <li> Participated in a hands-on learning program focused on applied data analysis using Python and Excel. </li>
+<li>Collected, cleaned, and analyzed datasets from mini-projects simulating real-world challenges.</li>
+ <li>Utilized Python and Matplotlib for data visualization, creating insightful reports and dashboards. </li>
+<li>Collaborated with peers and mentors to work on data-driven solutions, strengthening technical skills and teamwork.</li> 
+                </p><br>
+                <div class="flex flex-wrap gap-2">
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">SQL</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Python</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">Data Cleaning</span>
+                  <span class="text-xs px-2 py-1 bg-gray-700 rounded-full">ETL</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text">Certifications</h2>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-left animation-delay-200">
+        Professional certifications in data analytics and business intelligence.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-100">
+        <div class="text-indigo-400 mb-4 text-4xl">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">Google Data Analytics Certification</h3>
+        <p class="text-gray-400 text-sm mb-4">Comprehensive training in data analysis, including data cleaning, visualization, and insights generation using SQL and Tableau.</p>
+        <a href="https://drive.google.com/file/d/1AOfnzKIl31urTXEaN93ZbMx9FPXwvPb6/view?usp=drivesdk" target="_blank" class="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center gap-1" aria-label="Verify Google Data Analytics Certification">
+          Verify Certificate <i class="fas fa-external-link-alt text-xs"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-200">
+        <div class="text-purple-400 mb-4 text-4xl">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">Meta Data Analytics Certification</h3>
+        <p class="text-gray-400 text-sm mb-4">Advanced data analytics techniques, focusing on social media data and business metrics to drive strategic decisions.</p>
+        <a href="https://drive.google.com/file/d/1AWNB6lY3h0wLNOMMlBOn-FYBtK5HGq1z/view?usp=drivesdk" target="_blank" class="text-purple-400 hover:text-purple-300 text-sm font-medium flex items-center gap-1" aria-label="Verify Meta Data Analytics Certification">
+          Verify Certificate <i class="fas fa-external-link-alt text-xs"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-300">
+        <div class="text-pink-400 mb-4 text-4xl">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">Google Business Intelligence</h3>
+        <p class="text-gray-400 text-sm mb-4">Specialized in designing and implementing business intelligence solutions, including dashboards and KPIs.</p>
+        <a href="https://drive.google.com/file/d/1AQ9UuZ02sHePAy05MnEv9wrkstnvw0WY/view?usp=drivesdk" target="_blank" class="text-pink-400 hover:text-pink-300 text-sm font-medium flex items-center gap-1" aria-label="Verify Google Business Intelligence Certification">
+          Verify Certificate <i class="fas fa-external-link-alt text-xs"></i>
+        </a>
+      </div>
+      <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 card-hover animate-reveal-from-bottom animation-delay-400">
+        <div class="text-blue-400 mb-4 text-4xl">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <h3 class="font-bold text-lg mb-2">Data Science Internship Certification</h3>
+        <p class="text-gray-400 text-sm mb-4">Amassed hands-on experience in data analysis, machine learning, and data visualization, Contributing to real-world projects.</p>
+        <a href="https://drive.google.com/file/d/16GxcOm5z0UQ2bWHhYHWhhXlWz1TjO6WR/view?usp=drivesdk" target="_blank" class="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1" aria-label="Verify IBM Data Analytics Certification">
+          Verify Certificate <i class="fas fa-external-link-alt text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-4 gradient-text">Get In Touch</h2>
+      <p class="text-lg text-gray-400 max-w-2xl mx-auto animate-fade-in-left animation-delay-200">Interested in collaborating or have a project in mind? Let's connect!</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div class="animate-fade-in-left animation-delay-100">
+        <h3 class="text-xl font-bold mb-6">Contact Information</h3>
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-indigo-400"><i class="fas fa-envelope"></i></div>
+            <div>
+              <h4 class="font-medium">Email</h4>
+              <a href="mailto:felixidowu48@gmail.com" class="text-gray-400 hover:text-indigo-400 transition">felixidowu48@gmail.com</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-purple-400"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Phone</h4>
+              <a href="tel:+2348138623055" class="text-gray-400 hover:text-purple-400 transition">+234 813 862 3055</a>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="mt-1 text-pink-400"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <h4 class="font-medium">Location</h4>
+              <p class="text-gray-400">Lagos, Nigeria</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6">
+          <a href="/resume.pdf" download class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+            Download Resume <i class="fas fa-download"></i>
+          </a>
+        </div>
+      </div>
+      <div class="animate-fade-in-left animation-delay-200">
+        <form id="contactForm" class="space-y-4" novalidate>
+          <div id="formMessage" class="hidden p-4 rounded-lg text-sm"></div>
+          <div class="form-group">
+            <input type="text" id="name" name="name" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="name-error">
+            <label for="name">Name</label>
+            <p id="name-error" class="text-red-400 text-sm mt-1 hidden">Please enter your name.</p>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="email-error">
+            <label for="email">Email</label>
+            <p id="email-error" class="text-red-400 text-sm mt-1 hidden">Please enter a valid email address.</p>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" rows="4" placeholder=" " class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition" required aria-describedby="message-error"></textarea>
+            <label for="message">Message</label>
+            <p id="message-error" class="text-red-400 text-sm mt-1 hidden">Please enter a message.</p>
+          </div>
+          <button type="submit" id="submitButton" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center btn-shine">
+            <span id="buttonText">Send Message</span>
+            <svg id="loadingSpinner" class="hidden animate-spin h-5 w-5 ml-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 px-4 sm:px-6 bg-gray-900 border-t border-gray-800">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        <div class="space-y-4">
+          <a href="#" class="inline-block text-2xl font-bold tracking-tight">
+            <span class="gradient-text">FELIX IDOWU</span>
+          </a>
+          <p class="text-gray-400 text-sm">Data Analyst & Developer</p>
+          <p class="text-gray-500 text-sm">Transforming data into actionable insights.</p>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Quick Links</h4>
+          <div class="flex flex-col space-y-2">
+            <a href="#about" class="text-gray-400 hover:text-white transition">About</a>
+            <a href="#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+            <a href="#projects" class="text-gray-400 hover:text-white transition">Projects</a>
+            <a href="#experience" class="text-gray-400 hover:text-white transition">Experience</a>
+            <a href="#certifications" class="text-gray-400 hover:text-white transition">Certifications</a>
+            <a href="#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <h4 class="text-lg font-medium text-white">Stay Connected</h4>
+          <div class="flex justify-center md:justify-start gap-4 mt-4">
+            <a href="http://www.linkedin.com/in/felix-idowu-4347a4268" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-indigo-600 rounded-full transition" aria-label="LinkedIn profile">
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="https://github.com/felido01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-gray-700 rounded-full transition" aria-label="GitHub profile">
+              <i class="fab fa-github"></i>
+            </a>
+            <a href="https://x.com/01_felixidowu" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-blue-500 rounded-full transition" aria-label="Twitter profile">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://medium.com/@felixidowu.01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-pink-600 rounded-full transition" aria-label="Medium profile">
+              <i class="fab fa-medium"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+ <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+        <p>© <span id="year"></span> Felix Idowu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="toTop" class="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 hover:bg-indigo-700 rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 hidden" aria-label="Back to top">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Noscript Fallback -->
+  <noscript>
+    <style>
+      #preloader { display: none; }
+      .animate-fade-slide-in, .animate-fade-slide-up, .animate-reveal-from-bottom, .animate-fade-in-left, .animate-fade-in-right, .animate-fade-in-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+      #typed { display: none; }
+      #contactForm button svg { display: none; }
+      #progress, #toTop, .scroll-indicator { display: none; }
+    </style>
+    <div class="bg-yellow-900 text-yellow-100 p-4 text-center">
+      <p>JavaScript is disabled. Some features, like the contact form and animations, may not work. Please enable JavaScript or contact me at <a href="mailto:felixidowu48@gmail.com" class="underline">felixidowu48@gmail.com</a>.</p>
+    </div>
+  </noscript>
+
+  <script>
+    // Preloader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('preloader').classList.add('hidden');
+      }, 1500); // Reduced for faster load
+    });
+
+    // Profile Modal
+    const profileImgContainer = document.getElementById('profileImgContainer');
+    const profileModal = document.getElementById('profileModal');
+    const modalClose = document.querySelector('.modal-close');
+
+    profileImgContainer.addEventListener('click', () => {
+      profileModal.classList.add('show');
+    });
+
+    modalClose.addEventListener('click', () => {
+      profileModal.classList.remove('show');
+    });
+
+    profileModal.addEventListener('click', (e) => {
+      if (e.target === profileModal) {
+        profileModal.classList.remove('show');
+      }
+    });
+
+    // Utility Functions
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => document.querySelectorAll(selector);
+
+    // Mobile Menu
+    const toggleMenu = () => {
+      $('#mobileMenu').classList.toggle('hidden');
+      $('#line1').classList.toggle('rotate-45');
+      $('#line1').classList.toggle('translate-y-2');
+      $('#line2').classList.toggle('opacity-0');
+      $('#line3').classList.toggle('-rotate-45');
+      $('#line3').classList.toggle('-translate-y-2');
+    };
+
+    $('#hamburger').addEventListener('click', toggleMenu);
+    $$('#mobileMenu a').forEach(link => link.addEventListener('click', toggleMenu));
+
+    // Scroll Progress
+    let ticking = false;
+    const updateProgress = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollHeight = document.body.scrollHeight - window.innerHeight;
+          const scrollPosition = window.scrollY;
+          $('#progress').style.width = (scrollPosition / scrollHeight) * 100 + '%';
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', updateProgress);
+
+    // Back to Top
+    const toggleToTop = () => {
+      $('#toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+    };
+
+    window.addEventListener('scroll', toggleToTop);
+    $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+    // Typing Effect
+    const texts = ["Data Analyst.", "Visualization Expert.", "Data Storyteller", "BI Specialist", "Python Dev."];
+    let count = 0, index = 0, isDeleting = false, isEnd = false;
+
+    const type = () => {
+      const current = texts[count];
+      $('#typed').textContent = current.substring(0, isDeleting ? index - 1 : index + 1);
+      index = isDeleting ? index - 1 : index + 1;
+
+      if (!isDeleting && index === current.length) {
+        isEnd = true;
+        isDeleting = true;
+        setTimeout(type, 1500);
+      } else if (isDeleting && index === 0) {
+        isDeleting = false;
+        count = (count + 1) % texts.length;
+        setTimeout(type, 500);
+      } else {
+        const speed = isDeleting ? 50 : isEnd ? 100 : 150;
+        setTimeout(type, speed);
+      }
+      isEnd = false;
+    };
+
+    setTimeout(type, 1000);
+
+    // Form Submission
+    const validateForm = async (e) => {
+      e.preventDefault();
+      const form = $('#contactForm');
+      const submitButton = $('#submitButton');
+      const buttonText = $('#buttonText');
+      const loadingSpinner = $('#loadingSpinner');
+      const formMessage = $('#formMessage');
+      let isValid = true;
+
+      // Reset previous messages
+      formMessage.classList.add('hidden');
+      formMessage.className = 'hidden p-4 rounded-lg text-sm';
+
+      // Validate fields
+      const fields = [
+        { id: 'name', error: 'Please enter your name.' },
+        { id: 'email', error: 'Please enter a valid email address.', validate: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) },
+        { id: 'message', error: 'Please enter a message.' }
+      ];
+
+      fields.forEach(field => {
+        const input = $(`#${field.id}`);
+        const error = $(`#${field.id}-error`);
+        const value = input.value.trim();
+
+        if (!value || (field.validate && !field.validate(value))) {
+          error.classList.remove('hidden');
+          input.classList.add('border-red-500');
+          isValid = false;
+        } else {
+          error.classList.add('hidden');
+          input.classList.remove('border-red-500');
+        }
+      });
+
+      if (!isValid) return;
+
+      // Disable button and show loading spinner
+      submitButton.disabled = true;
+      buttonText.textContent = 'Sending...';
+      loadingSpinner.classList.remove('hidden');
+
+      try {
+        const response = await fetch('https://backend-m0xb.onrender.com/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: $('#name').value.trim(),
+            email: $('#email').value.trim(),
+            message: $('#message').value.trim()
+          })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          formMessage.textContent = 'Message sent successfully!';
+          formMessage.classList.add('bg-green-900', 'text-green-300');
+          form.reset();
+        } else {
+          throw new Error(result.message || 'Failed to send message.');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        formMessage.textContent = error.message || 'An error occurred. Please try again later.';
+        formMessage.classList.add('bg-red-900', 'text-red-300');
+      } finally {
+        formMessage.classList.remove('hidden');
+        submitButton.disabled = false;
+        buttonText.textContent = 'Send Message';
+        loadingSpinner.classList.add('hidden');
+      }
+    };
+
+    $('#contactForm').addEventListener('submit', validateForm);
+
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.utils.toArray('section').forEach(section => {
+      gsap.from(section, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        },
+        opacity: 0,
+        y: 30,
+        duration: 1,
+        ease: 'power2.out'
+      });
+    });
+
+    // Active Navigation
+    const setActiveNav = () => {
+      const sections = $$('section[id]');
+      let current = '';
+
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 150 && rect.bottom >= 150) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      $$('.nav-link').forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', setActiveNav);
+
+    // Smooth Scrolling
+    $$('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = anchor.getAttribute('href');
+        const target = $(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 60,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Set Year
+    $('#year').textContent = new Date().getFullYear();
+// Ensure DOM is fully loaded before attaching event listeners
+document.addEventListener('DOMContentLoaded', () => {
+  const dashboardImgContainers = document.querySelectorAll('.dashboard-img-container');
+  const profileModal = document.getElementById('profileModal');
+  const modalImg = profileModal.querySelector('img');
+  const modalContent = profileModal.querySelector('.modal-content');
+
+  // Debug: Log the number of dashboard containers found
+  console.log(`Found ${dashboardImgContainers.length} dashboard image containers`);
+
+  dashboardImgContainers.forEach((container, index) => {
+    container.addEventListener('click', (e) => {
+      e.preventDefault();
+      const imgSrc = container.getAttribute('data-img');
+      const ariaLabel = container.getAttribute('aria-label')?.replace('View ', '') || 'Dashboard Image';
+
+      // Debug: Log the clicked container and image source
+      console.log(`Clicked dashboard container ${index + 1}:`, imgSrc);
+
+      if (imgSrc && imgSrc !== '') {
+        modalContent.classList.add('loading');
+        const testImg = new Image();
+        testImg.src = imgSrc;
+        testImg.onload = () => {
+          modalImg.src = imgSrc;
+          modalImg.alt = ariaLabel;
+          modalContent.classList.remove('loading');
+          profileModal.classList.add('show');
+          // Debug: Confirm modal is shown
+          console.log('Modal opened with image:', imgSrc);
+        };
+        testImg.onerror = () => {
+          console.error('Failed to load image:', imgSrc);
+          alert('Unable to load the dashboard image. Please check if the image file exists.');
+          modalContent.classList.remove('loading');
+        };
+      } else {
+        console.error('Invalid image source for dashboard container:', container);
+        alert('Invalid image source. Please contact the administrator.');
+      }
+    });
+  });
+
+  // Ensure modal closes properly
+  profileModal.querySelector('.modal-close').addEventListener('click', () => {
+    profileModal.classList.remove('show');
+  });
+  profileModal.addEventListener('click', (e) => {
+    if (e.target === profileModal) {
+      profileModal.classList.remove('show');
+    }
+  });
+});
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Dashboard Gallery showcasing Sales, Marketing, Financial, and Operations Dashboards by Felix Idowu">
+    <meta name="keywords" content="dashboard gallery, data visualization, analytics, Felix Idowu, portfolio">
+    <meta name="author" content="Felix Idowu">
+    <meta property="og:title" content="Dashboard Gallery | Felix Idowu">
+    <meta property="og:description" content="Explore a collection of interactive dashboards for sales, marketing, financial, and operations analytics.">
+    <meta property="og:image" content="/dashboard-gallery-preview.jpg">
+    <meta property="og:url" content="https://your-portfolio.netlify.app/dashboards.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Dashboard Gallery | Felix Idowu</title>
+    <link rel="icon" href="https://felido01.github.io/favicon/favicon.svg" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <style>
+        :root {
+            --primary-indigo: #4f46e5;
+            --primary-purple: #7c3aed;
+            --primary-pink: #ec4899;
+            --bg-dark: #0f172a;
+            --bg-card: #1f2937;
+            --border-dark: #374151;
+            --shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --text-gray: #d1d5db;
+            --text-light: #f8fafc;
+            --font-base: 16px;
+            --font-sm: 14px;
+            --font-lg: 18px;
+            --font-xl: 24px;
+            --font-2xl: 32px;
+            --font-3xl: 40px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-size: var(--font-base);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 300;
+            touch-action: manipulation;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Exo 2', sans-serif;
+            font-weight: 500;
+        }
+
+        h1 { font-size: var(--font-3xl); }
+        h2 { font-size: var(--font-2xl); }
+        h3 { font-size: var(--font-xl); }
+        h4 { font-size: var(--font-lg); }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            font-weight: 700;
+        }
+
+        .gradient-text::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--bg-dark);
+            z-index: 1;
+            animation: drawGradient 2s ease forwards;
+        }
+
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-light);
+            border-color: var(--primary-indigo);
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease, transform 0.3s ease;
+            padding: 8px;
+            touch-action: manipulation;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-2px);
+            color: var(--primary-indigo);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary-indigo);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+            padding: 12px 24px;
+            touch-action: manipulation;
+        }
+
+        .btn-shine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-shine:hover::before {
+            left: 100%;
+        }
+
+        /* Preloader Styling */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        #preloader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .loader-text {
+            font-family: 'Exo 2', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeInOut 2s infinite;
+        }
+
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--text-gray);
+            border-top: 4px solid var(--primary-indigo);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Lightbox Modal */
+        #lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.3s ease;
+        }
+
+        #lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        #lightbox-img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+            animation: zoomIn 0.5s ease;
+        }
+
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-indigo);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        #lightbox-close:hover {
+            background: var(--primary-purple);
+            transform: scale(1.1);
+        }
+
+        /* Animation Keyframes */
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes drawGradient { 0% { width: 100%; } 100% { width: 0; } }
+        @keyframes fadeSlideIn { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeSlideUp { 0% { transform: translateY(20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes revealFromBottom { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeInLeft { 0% { transform: translateX(-20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeInRight { 0% { transform: translateX(20px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+        @keyframes fadeInUp { 0% { transform: translateY(10px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes parallax {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Animation Classes */
+        .animate-fade-slide-in { animation: fadeSlideIn 0.8s ease forwards; }
+        .animate-fade-slide-up { animation: fadeSlideUp 0.8s ease forwards; }
+        .animate-reveal-from-bottom { animation: revealFromBottom 0.8s ease forwards; }
+        .animate-fade-in-left { animation: fadeInLeft 0.8s ease forwards; }
+        .animate-fade-in-right { animation: fadeInRight 0.8s ease forwards; }
+        .animate-fade-in-up { animation: fadeInUp 0.8s ease forwards; }
+        .animate-parallax { animation: parallax 8s ease-in-out infinite; }
+
+        /* Delay Classes */
+        .animation-delay-100 { animation-delay: 100ms; }
+        .animation-delay-200 { animation-delay: 200ms; }
+        .animation-delay-300 { animation-delay: 300ms; }
+        .animation-delay-400 { animation-delay: 400ms; }
+        .animation-delay-500 { animation-delay: 500ms; }
+        .animation-delay-600 { animation-delay: 600ms; }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--bg-dark);
+            border-bottom: 1px solid var(--border-dark);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: var(--font-2xl);
+            font-weight: 500;
+        }
+
+        .section-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .dashboard-card {
+            background-color: var(--bg-card);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border-dark);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dashboard-image-container {
+            width: 100%;
+            overflow: hidden;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #374151;
+            cursor: pointer;
+        }
+
+        .dashboard-image {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .dashboard-card:hover .dashboard-image {
+            transform: scale(1.05);
+        }
+
+        .dashboard-info {
+            padding: 20px;
+            border-top: 1px solid var(--border-dark);
+        }
+
+        .dashboard-name {
+            font-size: var(--font-lg);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: var(--font-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary-indigo), var(--primary-purple));
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border-radius: 9999px;
+            padding: 12px 24px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #4338ca, #6d28d9);
+            transform: scale(1.05);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-gray);
+            border: 1px solid var(--border-dark);
+            border-radius: 9999px;
+            padding: 12px 24px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card);
+            border-color: var(--primary-indigo);
+            transform: scale(1.05);
+        }
+
+        /* Scroll Progress Bar */
+        #progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-indigo), var(--primary-purple), var(--primary-pink));
+            z-index: 50;
+            transition: width 0.3s ease;
+        }
+
+        /* Back to Top Button */
+        #toTop {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background: var(--primary-indigo);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, background 0.3s ease;
+            display: none;
+        }
+
+        #toTop:hover {
+            background: var(--primary-purple);
+            transform: scale(1.1);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            h1 {
+                font-size: var(--font-2xl);
+            }
+            .section-title {
+                font-size: var(--font-xl);
+            }
+            .section-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .btn {
+                width: 100%;
+                text-align: center;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-actions {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .animate-fade-slide-in, .animate-fade-slide-up, .animate-reveal-from-bottom,
+            .animate-fade-in-left, .animate-fade-in-right, .animate-fade-in-up,
+            .animate-parallax, .gradient-text::before, .btn-shine::before {
+                animation: none;
+                transition: none;
+            }
+            .card-hover:hover, .dashboard-card:hover .dashboard-image {
+                transform: none;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden bg-gray-950 text-gray-100">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader">
+            <div class="loader-text">Dashboard Gallery</div>
+            <div class="loader-spinner"></div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 z-50 transition-all"></div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" role="dialog" aria-label="Image Lightbox">
+        <img id="lightbox-img" src="" alt="Enlarged dashboard image">
+        <button id="lightbox-close" aria-label="Close lightbox"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed top-0 w-full bg-gray-900/95 backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto flex justify-between items-center p-2 sm:p-4">
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="text-xl sm:text-2xl font-bold tracking-tight">
+                    <span class="gradient-text">FELIX IDOWU</span>
+                </a>
+            </div>
+            <nav class="hidden md:flex space-x-4" aria-label="Main navigation">
+                <a href="index.html#about" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-100">About</a>
+                <a href="index.html#skills" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-200">Skills</a>
+                <a href="index.html#projects" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-300">Projects</a>
+                <a href="index.html#experience" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-400">Experience</a>
+                <a href="index.html#certifications" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-500">Certifications</a>
+                <a href="index.html#contact" class="nav-link text-gray-300 hover:text-white animate-fade-slide-in animation-delay-600">Contact</a>
+            </nav>
+            <button id="hamburger" class="md:hidden flex flex-col justify-between w-6 h-5 focus:outline-none" aria-label="Toggle mobile menu">
+                <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line1"></span>
+                <span class="block h-0.5 bg-white transition-all duration-300" id="line2"></span>
+                <span class="block h-0.5 bg-white transition-all duration-300 transform" id="line3"></span>
+            </button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-gray-900/95 backdrop-blur-lg border-t border-gray-800">
+            <div class="flex flex-col py-4 px-6 space-y-3" aria-label="Mobile navigation">
+                <a href="index.html#about" class="nav-link text-gray-300 hover:text-white py-2 text-lg">About</a>
+                <a href="index.html#skills" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Skills</a>
+                <a href="index.html#projects" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Projects</a>
+                <a href="index.html#experience" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Experience</a>
+                <a href="index.html#certifications" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Certifications</a>
+                <a href="index.html#contact" class="nav-link text-gray-300 hover:text-white py-2 text-lg">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex flex-col justify-center items-center text-center px-4 sm:px-6 pt-20 pb-16 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-4xl sm:text-6xl font-bold mb-6 gradient-text animate-fade-slide-up">Dashboard Gallery</h1>
+            <p class="text-xl sm:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed animate-fade-slide-up animation-delay-200">
+                Explore a collection of interactive dashboards showcasing insights in sales, marketing, finance, and operations.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#sales" class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full font-medium hover:from-indigo-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg btn-shine animate-fade-slide-up animation-delay-400">
+                    View Dashboards
+                </a>
+                <a href="index.html#contact" class="px-8 py-3 bg-gray-800 hover:bg-gray-700 rounded-full font-medium border border-gray-700 transition-all duration-300 transform hover:scale-105 btn-shine animate-fade-slide-up animation-delay-600">
+                    Contact Me
+                </a>
+            </div>
+        </div>
+        <div class="absolute inset-0 -z-10 overflow-hidden">
+            <div class="absolute w-64 h-64 bg-indigo-600/20 rounded-full blur-3xl top-1/4 left-1/4 animate-parallax"></div>
+            <div class="absolute w-80 h-80 bg-purple-600/20 rounded-full blur-3xl bottom-1/4 right-1/4 animate-parallax animation-delay-2000"></div>
+            <div class="absolute w-96 h-96 bg-pink-600/10 rounded-full blur-3xl top-1/3 right-1/3 animate-parallax animation-delay-4000"></div>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Section 1 -->
+        <section id="sales" class="section">
+            <div class="section-header">
+                <h2 class="section-title gradient-text animate-fade-slide-up">Sales Dashboards</h2>
+                <div class="section-actions animate-fade-slide-up animation-delay-200">
+                    <a href="https://app.powerbi.com/groups/me/reports/53cda70a-db29-43c3-80cd-440f9cdc4121/a2849a1365d89e7978c7?experience=power-bi" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+                        View Dashboards <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <button class="btn btn-secondary btn-shine">Details</button>
+                </div>
+            </div>
+            <div class="dashboard-grid">
+                <!-- Dashboard 1 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-300">
+                    <div class="dashboard-image-container" data-src="./1747451058388.jpg">
+                        <img class="dashboard-image" src="./1747451058388.jpg" alt="Sales Dashboard 1">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Quarterly Sales</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 2 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-400">
+                    <div class="dashboard-image-container" data-src="./1747451058375.jpg">
+                        <img class="dashboard-image" src="./1747451058375.jpg" alt="Sales Dashboard 2">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Product Performance</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 3 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-500">
+                    <div class="dashboard-image-container" data-src="./1747451058362.jpg">
+                        <img class="dashboard-image" src="./1747451058362.jpg" alt="Sales Dashboard 3">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Customer Segments</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="marketing" class="section">
+            <div class="section-header">
+                <h2 class="section-title gradient-text animate-fade-slide-up">Marketing Dashboards</h2>
+                <div class="section-actions animate-fade-slide-up animation-delay-200">
+                    <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+                        View Dashboards <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <button class="btn btn-secondary btn-shine">Details</button>
+                </div>
+            </div>
+            <div class="dashboard-grid">
+                <!-- Dashboard 1 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-300">
+                    <div class="dashboard-image-container" data-src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Marketing+Dashboard+1">
+                        <img class="dashboard-image" src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Marketing+Dashboard+1" alt="Marketing Dashboard 1">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Campaign Performance</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 2 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-400">
+                    <div class="dashboard-image-container" data-src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Marketing+Dashboard+2">
+                        <img class="dashboard-image" src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Marketing+Dashboard+2" alt="Marketing Dashboard 2">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Social Media Analytics</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 3 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-500">
+                    <div class="dashboard-image-container" data-src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Marketing+Dashboard+3">
+                        <img class="dashboard-image" src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Marketing+Dashboard+3" alt="Marketing Dashboard 3">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Lead Generation</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="financial" class="section">
+            <div class="section-header">
+                <h2 class="section-title gradient-text animate-fade-slide-up">Financial Dashboards</h2>
+                <div class="section-actions animate-fade-slide-up animation-delay-200">
+                    <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+                        View Dashboards <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <button class="btn btn-secondary btn-shine">Details</button>
+                </div>
+            </div>
+            <div class="dashboard-grid">
+                <!-- Dashboard 1 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-300">
+                    <div class="dashboard-image-container" data-src="./1746147568380.png">
+                        <img class="dashboard-image" src="./1746147568380.png" alt="Financial Dashboard 1">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Revenue Overview</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 2 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-400">
+                    <div class="dashboard-image-container" data-src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Financial+Dashboard+2">
+                        <img class="dashboard-image" src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Financial+Dashboard+2" alt="Financial Dashboard 2">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Expense Tracking</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 3 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-HOLDER500">
+                    <div class="dashboard-image-container" data-src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Financial+Dashboard+3">
+                        <img class="dashboard-image" src="https://via.placeholder.com/1200x800/1f2937/d1d5db?text=Financial+Dashboard+3" alt="Financial Dashboard 3">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Profitability Analysis</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="operations" class="section">
+            <div class="section-header">
+                <h2 class="section-title gradient-text animate-fade-slide-up">Operations Dashboards</h2>
+                <div class="section-actions animate-fade-slide-up animation-delay-200">
+                    <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 rounded-full text-white font-medium transition transform hover:scale-105 btn-shine">
+                        View Dashboards <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <button class="btn btn-secondary btn-shine">Details</button>
+                </div>
+            </div>
+            <div class="dashboard-grid">
+                <!-- Dashboard 1 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-300">
+                    <div class="dashboard-image-container" data-src="./1747451058388.jpg">
+                        <img class="dashboard-image" src="./1747451058388.jpg" alt="Operations Dashboard 1">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Inventory Management</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 2 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-400">
+                    <div class="dashboard-image-container" data-src="./1747451058375.jpg">
+                        <img class="dashboard-image" src="./1747451058375.jpg" alt="Operations Dashboard 2">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Supply Chain</h3>
+                    </div>
+                </div>
+                <!-- Dashboard 3 -->
+                <div class="dashboard-card card-hover animate-fade-slide-up animation-delay-500">
+                    <div class="dashboard-image-container" data-src="./1747451058362.jpg">
+                        <img class="dashboard-image" src="./1747451058362.jpg" alt="Operations Dashboard 3">
+                    </div>
+                    <div class="dashboard-info">
+                        <h3 class="dashboard-name">Production Metrics</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-4 sm:px-6 bg-gray-900 border-t border-gray-800">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                <div class="space-y-4">
+                    <a href="index.html" class="inline-block text-2xl font-bold tracking-tight">
+                        <span class="gradient-text">FELIX IDOWU</span>
+                    </a>
+                    <p class="text-gray-400 text-sm">Data Analyst & Developer</p>
+                    <p class="text-gray-500 text-sm">Transforming data into actionable insights.</p>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-lg font-medium text-white">Quick Links</h4>
+                    <div class="flex flex-col space-y-2">
+                        <a href="index.html#about" class="text-gray-400 hover:text-white transition">About</a>
+                        <a href="index.html#skills" class="text-gray-400 hover:text-white transition">Skills</a>
+                        <a href="index.html#projects" class="text-gray-400 hover:text-white transition">Projects</a>
+                        <a href="index.html#experience" class="text-gray-400 hover:text-white transition">Experience</a>
+                        <a href="index.html#certifications" class="text-gray-400 hover:text-white transition">Certifications</a>
+                        <a href="index.html#contact" class="text-gray-400 hover:text-white transition">Contact</a>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <h4 class="text-lg font-medium text-white">Stay Connected</h4>
+                    <div class="flex justify-center md:justify-start gap-4 mt-4">
+                        <a href="http://www.linkedin.com/in/felix-idowu-4347a4268" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-indigo-600 rounded-full transition" aria-label="LinkedIn profile">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/felido01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-gray-700 rounded-full transition" aria-label="GitHub profile">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://x.com/01_felixidowu" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-blue-500 rounded-full transition" aria-label="Twitter profile">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://medium.com/@felixidowu.01" target="_blank" class="w-10 h-10 flex items-center justify-center bg-gray-800 hover:bg-pink-600 rounded-full transition" aria-label="Medium profile">
+                            <i class="fab fa-medium"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
+                <p>© <span id="year"></span> Felix Idowu. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="toTop" class="fixed bottom-8 right-8 w-12 h-12 bg-indigo-600 hover:bg-indigo-700 rounded-full flex items-center justify-center shadow-lg transition transform hover:scale-110 hidden" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Noscript Fallback -->
+    <noscript>
+        <style>
+            #preloader, #lightbox { display: none; }
+            .animate-fade-slide-in, .animate-fade-slide-up, .animate-reveal-from-bottom,
+            .animate-fade-in-left, .animate-fade-in-right, .animate-fade-in-up,
+            .animate-parallax, .gradient-text::before, .btn-shine::before {
+                animation: none;
+                opacity: 1;
+                transform: none;
+            }
+            #progress, #toTop { display: none; }
+        </style>
+        <div class="bg-yellow-900 text-yellow-100 p-4 text-center">
+            <p>JavaScript is disabled. Some features may not work. Please enable JavaScript or contact me at <a href="mailto:felixidowu48@gmail.com" class="underline">felixidowu48@gmail.com</a>.</p>
+        </div>
+    </noscript>
+
+    <script>
+        // Define DOM selectors globally
+        const $ = (selector) => document.querySelector(selector);
+        const $$ = (selector) => document.querySelectorAll(selector);
+
+        // Preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                $('#preloader').classList.add('hidden');
+            }, 1500);
+        });
+
+        // Mobile Menu
+        const toggleMenu = () => {
+            $('#mobileMenu').classList.toggle('hidden');
+            $('#line1').classList.toggle('rotate-45');
+            $('#line1').classList.toggle('translate-y-2');
+            $('#line2').classList.toggle('opacity-0');
+            $('#line3').classList.toggle('-rotate-45');
+            $('#line3').classList.toggle('-translate-y-2');
+        };
+
+        $('#hamburger').addEventListener('click', toggleMenu);
+        $$('#mobileMenu a').forEach(link => link.addEventListener('click', toggleMenu));
+
+        // Scroll Progress
+        let ticking = false;
+        const updateProgress = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    const scrollHeight = document.body.scrollHeight - window.innerHeight;
+                    const scrollPosition = window.scrollY;
+                    $('#progress').style.width = (scrollPosition / scrollHeight) * 100 + '%';
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
+
+        window.addEventListener('scroll', updateProgress);
+
+        // Back to Top
+        const toggleToTop = () => {
+            $('#toTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
+        };
+
+        window.addEventListener('scroll', toggleToTop);
+        $('#toTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+        // Lightbox
+        const lightbox = $('#lightbox');
+        const lightboxImg = $('#lightbox-img');
+        const lightboxClose = $('#lightbox-close');
+
+        $$('.dashboard-image-container').forEach(container => {
+            container.addEventListener('click', () => {
+                lightboxImg.src = container.dataset.src;
+                lightboxImg.alt = container.querySelector('img').alt;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 1,
+                ease: 'power2.out'
+            });
+        });
+
+        gsap.utils.toArray('.dashboard-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+        });
+
+        // Smooth Scrolling
+        $$('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = anchor.getAttribute('href');
+                const target = $(targetId);
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 60,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Set Year
+        $('#year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
